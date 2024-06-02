@@ -1,0 +1,17 @@
+---
+- name: Check if multipathd is installed
+  ansible.builtin.shell: dpkg -l | grep -q multipath-tools
+  register: multipathd_installed
+  changed_when: false
+  failed_when: false
+  ignore_errors: true
+
+- name: Disable multipathd
+  become: true
+  ansible.builtin.shell: |
+    systemctl stop multipathd
+    systemctl disable multipathd
+    systemctl mask multipathd
+    apt purge multipath-tools -y
+    apt-mark hold multipath-tools
+  when: multipathd_installed.rc == 0

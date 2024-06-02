@@ -1,0 +1,4 @@
+---
+ansible_ssh_user: srvadm
+ansible_ssh_private_key_file: /home/daze/.ssh/id_ed25519
+system_timezone: "Europe/Berlin"

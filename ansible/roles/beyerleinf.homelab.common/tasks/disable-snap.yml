@@ -1,0 +1,18 @@
+---
+- name: Check if snap is installed
+  ansible.builtin.shell: snap list | grep -q snapd
+  register: snap_installed
+  changed_when: false
+  failed_when: false
+  ignore_errors: true
+
+- name: Remove snapd
+  become: true
+  ansible.builtin.shell: |
+    systemctl stop snapd
+    systemctl disable snapd
+    systemctl mask snapd
+    apt purge snapd -y
+    apt-mark hold snapd
+    rm -rf ~/snap/
+  when: snap_installed.rc == 0
