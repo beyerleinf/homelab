@@ -1,4 +1,4 @@
-.PHONY: create_role install_role install_roles list_roles remove_role run_playbook reboot reset_cluster
+.PHONY: create_role install_role install_roles list_roles remove_role run_playbook reboot reset_cluster kubectl
 
 create_role:
 	ansible-galaxy init $(role) --init-path=./roles

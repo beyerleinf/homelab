@@ -6,12 +6,23 @@
   failed_when: false
   ignore_errors: true
 
-- name: Disable multipathd
-  become: true
-  ansible.builtin.shell: |
-    systemctl stop multipathd
-    systemctl disable multipathd
-    systemctl mask multipathd
-    apt purge multipath-tools -y
-    apt-mark hold multipath-tools
+- name: Stop and disable multipathd
+  ansible.builtin.systemd:
+    name: multipathd
+    state: stopped
+    enabled: false
+    masked: true
+  when: multipathd_installed.rc == 0
+
+- name: Purge multipathd
+  ansible.builtin.apt:
+    name: multipath-tools
+    state: absent
+    purge: true
+  when: multipathd_installed.rc == 0
+
+- name: Hold multipathd
+  ansible.builtin.dpkg_selections:
+    name: multipath-tools
+    selection: hold
   when: multipathd_installed.rc == 0

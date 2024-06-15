@@ -6,24 +6,18 @@
   when: (system_timezone is defined) and (system_timezone != "Your/Timezone")
 
 - name: Install Basic Packages
-  apt:
+  ansible.builtin.apt:
     pkg:
       - nano
       - htop
       - openssh-server
       - qemu-guest-agent
       - iputils-ping
-    state: latest
+    state: present
     update_cache: true
 
 - name: Disable Snap
-  import_tasks: disable-snap.yml
+  ansible.builtin.import_tasks: disable-snap.yml
 
 - name: Disable multipathd
-  import_tasks: disable-multipathd.yml
-
-- name: Create /opt/k3s directory
-  ansible.builtin.file:
-    path: /opt/k3s
-    state: directory
-    mode: 0755
+  ansible.builtin.import_tasks: disable-multipathd.yml
