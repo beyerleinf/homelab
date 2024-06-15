@@ -2,4 +2,4 @@ roles/*
 !roles/beyerleinf*/
 !roles/beyerleinf*/** */
 
-kubeconfig.yml
+vault-password

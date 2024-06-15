@@ -13,7 +13,13 @@
       - openssh-server
       - qemu-guest-agent
       - iputils-ping
+      - python3-pip
     state: present
+    update_cache: true
+
+- name: Update packages
+  ansible.builtin.apt:
+    upgrade: safe
     update_cache: true
 
 - name: Disable Snap

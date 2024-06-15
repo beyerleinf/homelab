@@ -1,3 +1,4 @@
 ---
-- src: xanmanning.k3s
-  version: v3.4.4
+collections:
+  - name: kubernetes.core
+    version: 5.0.0

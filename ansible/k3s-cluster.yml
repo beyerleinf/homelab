@@ -1,26 +1,19 @@
 ---
-- name: K3s Cluster Setup
+- name: Setup K3s Cluster
   hosts: k3s_cluster
   become: true
   roles:
     - beyerleinf.homelab.common
-    - xanmanning.k3s
-  vars:
-    k3s_etcd_datastore: false
-    k3s_become: true
-    k3s_server:
-      disable:
-        - traefik
-        - coredns
+    - beyerleinf.homelab.k3s
 
-- name: Download kubeconfig from master
+- name: Configure K3s Servers
   hosts: servers
   become: true
-  tasks:
-    - name: Copy kubeconfig from master
-      fetch:
-        src: /etc/rancher/k3s/k3s.yaml
-        dest: ./kubeconfig.yml
-        flat: yes
-      run_once: true
-      when: inventory_hostname == groups['servers'][0]
+  roles:
+    - beyerleinf.homelab.k3s_server
+
+- name: Configer K3s Workers
+  hosts: workers
+  become: true
+  roles:
+    - beyerleinf.homelab.k3s_worker
