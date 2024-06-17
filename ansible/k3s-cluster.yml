@@ -17,3 +17,9 @@
   become: true
   roles:
     - beyerleinf.homelab.k3s_worker
+
+- name: Configure Infrastructure Services
+  hosts: servers
+  become: false
+  roles:
+    - beyerleinf.homelab.metallb
