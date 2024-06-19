@@ -7,6 +7,7 @@
 - Ansible
 - K3s
 - MetalLB
+- Traefik
 
 ## Requirements
 
