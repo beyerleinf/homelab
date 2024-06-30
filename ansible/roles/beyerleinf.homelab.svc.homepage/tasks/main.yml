@@ -10,9 +10,15 @@
     mode: "666"
     recurse: true
 
-- name: Copy Docker Compose files
+- name: Copy Docker env file
   ansible.builtin.template:
-    src: files/docker-compose.yml.j2
+    src: files/.docker-env.j2
+    dest: /tmp/homepage/.env
+    mode: "666"
+
+- name: Copy Docker Compose file
+  ansible.builtin.copy:
+    src: files/docker-compose.yml
     dest: /tmp/homepage/docker-compose.yml
     mode: "666"
 
@@ -24,7 +30,7 @@
     state: absent
     remove_volumes: true
 
-- name: Delete content & directory
+- name: Delete old Docker directory
   ansible.builtin.file:
     state: absent
     path: "{{ docker_dir }}"
@@ -56,7 +62,7 @@
     dest: "{{ docker_dir }}/docker.yaml"
     mode: "666"
 
-- name: Deploy Docker Compose stack
+- name: Deploy Homepage
   community.docker.docker_compose_v2:
     project_src: /tmp/homepage
     files:
@@ -67,3 +73,8 @@
   ansible.builtin.assert:
     that:
       - "output.containers[0].State == 'running'"
+
+- name: Remove temp directory
+  ansible.builtin.file:
+    path: /tmp/homepage/
+    state: absent

@@ -7,7 +7,7 @@ services:
     ports:
       - 3003:3000
     volumes:
-      - {{ docker_dir }}:/app/config
+      - ${DOCKER_DIR}:/app/config
       - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   homepage:
