@@ -5,9 +5,8 @@
 ## Stack
 
 - Ansible
-- K3s
-- MetalLB
 - Traefik
+- Docker Compose
 
 ## Requirements
 
