@@ -11,3 +11,4 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.homepage
+    - beyerleinf.homelab.svc.paperless-ngx

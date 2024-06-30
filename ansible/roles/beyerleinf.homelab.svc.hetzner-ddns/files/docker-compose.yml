@@ -3,9 +3,9 @@ services:
     image: kutzilla/hetzner-ddns:2.1
     container_name: hetzner-ddns
     environment:
-      ZONE_NAME: "beyerleinf.de"
-      RECORD_NAME: "lab"
-      API_TOKEN: "${HETZNER_API_KEY}"
-      RECORD_TYPE: "A"
+      ZONE_NAME: beyerleinf.de
+      RECORD_NAME: lab
+      API_TOKEN: ${HETZNER_API_KEY}
+      RECORD_TYPE: A
       CRON_EXPRESSION: "0 */2 * * *"
     restart: unless-stopped

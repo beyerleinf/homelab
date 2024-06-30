@@ -1,0 +1,92 @@
+name: paperless-ngx
+services:
+  broker:
+    image: redis:7.2.5-alpine
+    restart: unless-stopped
+    networks:
+      - paperless
+    volumes:
+      - redisdata:/data
+
+  db:
+    image: mariadb:11.4.2
+    restart: unless-stopped
+    networks:
+      - paperless
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      MARIADB_HOST: db
+      MARIADB_DATABASE: paperless
+      MARIADB_USER: paperless
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.10.2
+    restart: unless-stopped
+    networks:
+      - traefik
+      - paperless
+    depends_on:
+      - db
+      - broker
+      - gotenberg
+      - tika
+    ports:
+      - 8000:8000
+    volumes:
+      - data:/usr/src/paperless/data
+      - ${MEDIA_DIR}:/usr/src/paperless/media
+      - ${EXPORT_DIR}:/usr/src/paperless/export
+      - ${CONSUME_DIR}:/usr/src/paperless/consume
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.paperless.rule=Host(`paperless.lab.beyerleinf.de`)"
+      - "traefik.http.routers.paperless.entrypoints=websecure"
+      - "traefik.http.routers.paperless.tls.certresolver=hetzner"
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBENGINE: mariadb
+      PAPERLESS_DBHOST: db
+      PAPERLESS_DBUSER: paperless
+      PAPERLESS_DBPASS: ${MARIADB_PASSWORD}
+      PAPERLESS_DBPORT: 3306
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
+      PAPERLESS_TIKA_ENDPOINT: http://tika:9998
+      PAPERLESS_TIME_ZONE: Europe/Berlin
+      PAPERLESS_OCR_LANGUAGE: deu
+      PAPERLESS_OCR_LANGUAGES: eng
+      PAPERLESS_URL: https://paperless.lab.beyerleinf.de
+      PAPERLESS_FILENAME_FORMAT: "{created}-{correspondent}-{title}"
+
+  gotenberg:
+    image: gotenberg/gotenberg:8.7.0
+    restart: unless-stopped
+    networks:
+      - paperless
+    # The gotenberg chromium route is used to convert .eml files. We do not
+    # want to allow external content like tracking pixels or even javascript.
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
+
+  tika:
+    image: apache/tika:2.9.2.1
+    restart: unless-stopped
+    networks:
+      - paperless
+
+volumes:
+  data:
+  dbdata:
+  redisdata:
+
+networks:
+  traefik:
+    name: traefik
+    external: true
+  paperless:
+    name: paperless
