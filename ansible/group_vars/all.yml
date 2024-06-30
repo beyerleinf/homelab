@@ -15,5 +15,5 @@ token: !vault |
   64636666633061353333393363393636343534663637353163633536646632363936383330636237
   64646530373733386137306362316265643439383639303335633031616339663461
 api_endpoint: "{{ hostvars[groups['servers'][0]]['ansible_host'] | default(groups['servers'][0]) }}"
-extra_server_args: ""
-extra_agent_args: ""
+extra_server_args: "--disable=traefik,servicelb"
+extra_agent_args: "--disable=traefik,servicelb"

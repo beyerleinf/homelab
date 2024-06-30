@@ -17,10 +17,26 @@
   become: true
   roles:
     - beyerleinf.homelab.k3s_worker
+# - name: Configure Infrastructure Services
+#   hosts: servers
+#   become: false
+#   roles:
+#     - beyerleinf.homelab.metallb
+#     - beyerleinf.homelab.traefik
 
-- name: Configure Infrastructure Services
-  hosts: servers
-  become: false
-  roles:
-    - beyerleinf.homelab.metallb
-    - beyerleinf.homelab.traefik
+# - name: Create apps namespace
+#   hosts: servers
+#   become: false
+#   tasks:
+#     - name: Create apps namespace
+#       kubernetes.core.k8s:
+#         name: apps
+#         api_version: v1
+#         kind: Namespace
+#         state: present
+
+# - name: Configure Applications
+#   hosts: servers
+#   become: false
+#   roles:
+#     - beyerleinf.homelab.svc.homepage

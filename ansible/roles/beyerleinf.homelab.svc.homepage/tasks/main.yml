@@ -1,0 +1,20 @@
+---
+# tasks file for beyerleinf.homelab.svc.homepage
+
+- name: Create configmap
+  kubernetes.core.k8s:
+    namespace: apps
+    apply: true
+    definition: "{{ lookup('file', 'configmap.yml') | from_yaml }}"
+
+- name: Create deployment
+  kubernetes.core.k8s:
+    state: present
+    apply: true
+    definition: "{{ lookup('file', 'deployment.yml') | from_yaml }}"
+
+- name: Create service
+  kubernetes.core.k8s:
+    state: present
+    apply: true
+    definition: "{{ lookup('file', 'service.yml') | from_yaml }}"
