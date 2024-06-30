@@ -1,4 +1,10 @@
 ---
+- name: Deploy Infrastructure
+  hosts: arya
+  become: true
+  roles:
+    - beyerleinf.homelab.svc.traefik
+
 - name: Deploy Services
   hosts: arya
   become: true

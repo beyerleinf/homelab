@@ -1,0 +1,31 @@
+services:
+  reverse-proxy:
+    image: traefik:v3.0
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.network=traefik"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.websecure.address=:4443"
+      - "--certificatesresolvers.hetzner.acme.dnschallenge=true"
+      - "--certificatesresolvers.hetzner.acme.dnschallenge.provider=hetzner"
+      - "--certificatesresolvers.hetzner.acme.email=dev@beyerleinf.de"
+      - "--certificatesresolvers.hetzner.acme.storage=/acme/acme.json"
+    environment:
+      - "HETZNER_API_KEY=${HETZNER_API_KEY}"
+    networks:
+      - traefik
+    ports:
+      - "4443:4443"
+      - "8089:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik-acme:/acme
+
+volumes:
+  traefik-acme:
+
+networks:
+  traefik:
+    name: traefik

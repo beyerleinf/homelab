@@ -1,5 +1,5 @@
 ---
-# tasks file for beyerleinf.homelab.svc.homepage
+# tasks file for beyerleinf.homelab.svc.traefik
 
 - name: Create temp directory
   ansible.builtin.file:
@@ -22,7 +22,7 @@
     dest: "{{ tmp_dir }}/docker-compose.yml"
     mode: "666"
 
-- name: Stop Homepage
+- name: Stop Traefik
   community.docker.docker_compose_v2:
     project_src: "{{ tmp_dir }}"
     files:
@@ -30,46 +30,14 @@
     state: absent
     remove_volumes: true
 
-- name: Delete old Docker directory
-  ansible.builtin.file:
-    state: absent
-    path: "{{ docker_dir }}"
-
-- name: Create Docker directory
-  ansible.builtin.file:
-    path: "{{ docker_dir }}"
-    state: directory
-    owner: root
-    group: root
-    mode: "666"
-    recurse: true
-
-- name: Copy Homepage settings
-  ansible.builtin.template:
-    src: files/settings.yml.j2
-    dest: "{{ docker_dir }}/settings.yaml"
-    mode: "666"
-
-- name: Copy Homepage services
-  ansible.builtin.template:
-    src: files/services.yml.j2
-    dest: "{{ docker_dir }}/services.yaml"
-    mode: "666"
-
-- name: Copy Homepage docker config
-  ansible.builtin.template:
-    src: files/docker.yml.j2
-    dest: "{{ docker_dir }}/docker.yaml"
-    mode: "666"
-
-- name: Deploy Homepage
+- name: Deploy Traefik
   community.docker.docker_compose_v2:
     project_src: "{{ tmp_dir }}"
     files:
       - docker-compose.yml
   register: output
 
-- name: Verify that Homepage is running
+- name: Verify that Traefik is running
   ansible.builtin.assert:
     that:
       - "output.containers[0].State == 'running'"

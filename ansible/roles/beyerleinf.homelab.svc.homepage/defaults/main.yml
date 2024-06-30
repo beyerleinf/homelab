@@ -1,5 +1,7 @@
 ---
 # defaults file for beyerleinf.homelab.svc.homepage
+
+tmp_dir: /tmp/homepage
 docker_dir: "{{ docker_base_path }}/homepage"
 nextcloud_username: admin
 nextcloud_password: !vault |

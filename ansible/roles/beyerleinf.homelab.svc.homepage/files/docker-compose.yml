@@ -3,16 +3,21 @@ services:
     image: ghcr.io/gethomepage/homepage:v0.9.2
     container_name: homepage
     networks:
-      - reverseproxy
+      - traefik
     ports:
       - 3003:3000
     volumes:
       - ${DOCKER_DIR}:/app/config
       - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homepage.rule=Host(`home.lab.beyerleinf.de`)"
+      - "traefik.http.routers.homepage.entrypoints=websecure"
+      - "traefik.http.routers.homepage.tls.certresolver=hetzner"
 volumes:
   homepage:
 
 networks:
-  reverseproxy:
-    name: reverseproxy
+  traefik:
+    name: traefik
     external: true
