@@ -3,6 +3,7 @@
   hosts: arya
   become: true
   roles:
+    - beyerleinf.homelab.svc.hetzner-ddns
     - beyerleinf.homelab.svc.traefik
 
 - name: Deploy Services

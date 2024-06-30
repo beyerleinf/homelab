@@ -13,7 +13,7 @@ services:
       - "--certificatesresolvers.hetzner.acme.email=dev@beyerleinf.de"
       - "--certificatesresolvers.hetzner.acme.storage=/acme/acme.json"
     environment:
-      - "HETZNER_API_KEY=${HETZNER_API_KEY}"
+      HETZNER_API_KEY: "${HETZNER_API_KEY}"
     networks:
       - traefik
     ports:
@@ -22,6 +22,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - traefik-acme:/acme
+    restart: unless-stopped
 
 volumes:
   traefik-acme:
