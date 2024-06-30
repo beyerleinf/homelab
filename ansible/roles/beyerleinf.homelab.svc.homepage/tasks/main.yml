@@ -27,7 +27,7 @@
     project_src: "{{ tmp_dir }}"
     files:
       - docker-compose.yml
-    state: absent
+    state: stopped
     remove_volumes: true
 
 - name: Delete old Docker directory

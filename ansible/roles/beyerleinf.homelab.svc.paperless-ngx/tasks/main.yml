@@ -7,7 +7,7 @@
     state: directory
     owner: root
     group: root
-    mode: "666"
+    mode: "777"
     recurse: true
 
 - name: Ensure docker directory exists
@@ -16,7 +16,7 @@
     state: directory
     owner: root
     group: root
-    mode: "666"
+    mode: "777"
     recurse: true
 
 - name: Ensure media directory exists
@@ -25,7 +25,7 @@
     state: directory
     owner: root
     group: root
-    mode: "666"
+    mode: "777"
     recurse: true
 
 - name: Ensure export directory exists
@@ -34,7 +34,7 @@
     state: directory
     owner: root
     group: root
-    mode: "666"
+    mode: "777"
     recurse: true
 
 - name: Copy Docker env file
@@ -54,22 +54,8 @@
     project_src: "{{ tmp_dir }}"
     files:
       - docker-compose.yml
-    state: absent
+    state: stopped
     remove_volumes: true
-
-- name: Delete old Docker directory
-  ansible.builtin.file:
-    state: absent
-    path: "{{ docker_dir }}"
-
-- name: Create Docker directory
-  ansible.builtin.file:
-    path: "{{ docker_dir }}"
-    state: directory
-    owner: root
-    group: root
-    mode: "666"
-    recurse: true
 
 - name: Deploy Paperless-ngx
   community.docker.docker_compose_v2:
@@ -82,6 +68,10 @@
   ansible.builtin.assert:
     that:
       - "output.containers[0].State == 'running'"
+      - "output.containers[1].State == 'running'"
+      - "output.containers[2].State == 'running'"
+      - "output.containers[3].State == 'running'"
+      - "output.containers[4].State == 'running'"
 
 - name: Remove temp directory
   ansible.builtin.file:
