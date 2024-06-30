@@ -1,4 +1,0 @@
----
-systemd_dir: /etc/systemd/system # noqa var-naming[no-role-prefix]
-server_group: servers # noqa var-naming[no-role-prefix]
-agent_group: workers # noqa var-naming[no-role-prefix]

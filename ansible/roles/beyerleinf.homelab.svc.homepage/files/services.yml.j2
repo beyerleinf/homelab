@@ -1,0 +1,40 @@
+- Storage:
+    - Nextcloud:
+        icon: nextcloud.png
+        href: https://cloud.lab.beyerleinf.de
+        siteMonitor: https://cloud.lab.beyerleinf.de
+        server: arya
+        container: nextcloud
+        widget:
+          type: nextcloud
+          url: https://cloud.lab.beyerleinf.de
+          username: {{ nextcloud_username }}
+          password: {{ nextcloud_password }}
+
+    - Paperless:
+        icon: paperless-ngx.png
+        href: https://paperless.lab.beyerleinf.de
+        siteMonitor: https://paperless.lab.beyerleinf.de
+        server: arya
+        container: paperless-ngx
+        widget:
+          type: paperlessngx
+          url: https://paperless.lab.beyerleinf.de
+          key: {{ paperless_api_key }}
+
+- Media:
+    - Jellyfin:
+        icon: jellyfin.png
+        href: https://media.lab.beyerleinf.de
+        siteMonitor: https://media.lab.beyerleinf.de/health
+        server: arya
+        container: jellyfin
+        widget:
+          type: jellyfin
+          url: https://media.lab.beyerleinf.de
+          key: {{ jellyfin_api_key }}
+          enableBlocks: true
+          enableNowPlaying: true
+          enableUser: true
+          showEpisodeNumber: true
+          expandOneStreamToTwoRows: false

@@ -1,4 +1,0 @@
----
-# defaults file for beyerleinf.homelab.metallb
-pool_name: "default-pool" # noqa var-naming[no-role-prefix]
-pool_range: 10.0.0.231-10.0.0.252 # noqa var-naming[no-role-prefix]

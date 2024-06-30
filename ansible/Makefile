@@ -1,4 +1,4 @@
-.PHONY: create_role install_role install_roles list_roles remove_role run_playbook reboot reset upgrade
+.PHONY: create_role install_role install_roles list_roles remove_role run_playbook
 
 create_role:
 	ansible-galaxy init $(role) --init-path=./roles
@@ -17,12 +17,3 @@ remove_role:
 
 deploy:
 	ansible-playbook site.yml $(cmd)
-
-upgrade:
-	ansible-playbook upgrade.yml
-
-reboot:
-	ansible-playbook reboot.yml
-
-reset:
-	ansible-playbook reset.yml

@@ -1,3 +1,6 @@
 ---
-- name: K3S Cluster
-  ansible.builtin.import_playbook: k3s-cluster.yml
+- name: Deploy Services
+  hosts: arya
+  become: true
+  roles:
+    - beyerleinf.homelab.svc.homepage

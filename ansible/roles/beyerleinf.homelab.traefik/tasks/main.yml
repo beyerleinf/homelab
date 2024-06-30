@@ -1,7 +1,0 @@
----
-# tasks file for beyerleinf.homelab.traefik
-
-- name: Configure Traefik Dashboard
-  kubernetes.core.k8s:
-    state: present
-    definition: "{{ lookup('file', 'dashboard.yml') | from_yaml }}"
