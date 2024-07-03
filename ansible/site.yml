@@ -27,3 +27,10 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.umami
+
+- name: Deploy Jellyfin
+  hosts: arya
+  tags: jellyfin
+  become: true
+  roles:
+    - beyerleinf.homelab.svc.jellyfin

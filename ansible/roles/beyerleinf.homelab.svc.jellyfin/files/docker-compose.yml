@@ -1,0 +1,39 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:10.9.7
+    container_name: jellyfin
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - traefik
+    ports:
+      - 1901:1900 # DLNA
+      - 7359:7359 # Discovery
+      - 8096:8096 # Web UI
+    volumes:
+      - ${CONFIG_DIR}:/config
+      - ${CACHE_DIR}:/cache
+      - ${MOVIES_DIR}:/data/movies
+      - ${TVSHOWS_DIR}:/data/tvshows
+      - ${MUSIC_DIR}:/data/music
+    restart: "unless-stopped"
+    environment:
+      JELLYFIN_PublishedServerUrl: ${DISCOVERY_IP}
+      NVIDIA_VISIBLE_DEVICES: all
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jellyfin.rule=Host(`media.lab.beyerleinf.de`)"
+      - "traefik.http.routers.jellyfin.entrypoints=websecure"
+      - "traefik.http.routers.jellyfin.tls.certresolver=hetzner"
+      - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+
+networks:
+  traefik:
+    name: traefik
+    external: true

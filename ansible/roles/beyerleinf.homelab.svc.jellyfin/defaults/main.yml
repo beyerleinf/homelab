@@ -1,0 +1,7 @@
+---
+# defaults file for beyerleinf.homelab.svc.jellyfin
+
+tmp_dir: /tmp/jellyfin
+media_dir: /mnt/user/jellyfin/
+docker_dir: "{{ docker_base_path }}/jellyfin"
+jellyfin_discovery_ip: "{{ ansible_host }}"
