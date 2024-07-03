@@ -1,15 +1,29 @@
 ---
 - name: Deploy Infrastructure
   hosts: arya
+  tags: infrastructure
   become: true
   roles:
     - beyerleinf.homelab.svc.hetzner-ddns
     - beyerleinf.homelab.svc.traefik
 
-- name: Deploy Services
+- name: Deploy Homepage
   hosts: arya
+  tags: homepage
   become: true
   roles:
     - beyerleinf.homelab.svc.homepage
+
+- name: Deploy Paperless-ngx
+  hosts: arya
+  tags: paperless
+  become: true
+  roles:
     - beyerleinf.homelab.svc.paperless-ngx
+
+- name: Deploy Umami
+  hosts: arya
+  tags: umami
+  become: true
+  roles:
     - beyerleinf.homelab.svc.umami
