@@ -12,7 +12,7 @@ services:
       - seafile
 
   memcached:
-    image: memcached:1.6.18
+    image: memcached:1.6.29
     entrypoint: memcached -m 256
     networks:
       - seafile
