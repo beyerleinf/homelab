@@ -2,6 +2,8 @@ services:
   hetzner-ddns:
     image: kutzilla/hetzner-ddns:2.1
     container_name: hetzner-ddns
+    networks:
+      - hetzner-ddns
     environment:
       ZONE_NAME: beyerleinf.de
       RECORD_NAME: lab
@@ -9,3 +11,7 @@ services:
       RECORD_TYPE: A
       CRON_EXPRESSION: "0 */2 * * *"
     restart: unless-stopped
+
+networks:
+  hetzner-ddns:
+    name: hetzner-ddns

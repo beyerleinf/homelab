@@ -13,6 +13,9 @@ services:
       - --certificatesresolvers.hetzner.acme.dnschallenge.provider=hetzner
       - --certificatesresolvers.hetzner.acme.email=dev@beyerleinf.de
       - --certificatesresolvers.hetzner.acme.storage=/acme/acme.json
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
     environment:
       HETZNER_API_KEY: ${HETZNER_API_KEY}
     networks:

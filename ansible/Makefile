@@ -1,4 +1,4 @@
-.PHONY: create_role install_role install_roles list_roles remove_role run_playbook deploy deploy_infrastructure deploy_homepage deploy_paperless deploy_umami deploy_jellyfin
+.PHONY: create_role install_role install_roles list_roles remove_role run_playbook deploy deploy_infrastructure deploy_homepage deploy_paperless deploy_umami deploy_jellyfin deploy_seafile
 
 create_role:
 	ansible-galaxy init $(role) --init-path=./roles
@@ -32,4 +32,7 @@ deploy_umami:
 
 deploy_jellyfin:
 	ansible-playbook site.yml --tags=jellyfin $(cmd)
+
+deploy_seafile:
+	ansible-playbook site.yml --tags=seafile $(cmd)
 

@@ -34,3 +34,10 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.jellyfin
+
+- name: Deploy Seafile
+  hosts: arya
+  tags: seafile
+  become: true
+  roles:
+    - beyerleinf.homelab.svc.seafile

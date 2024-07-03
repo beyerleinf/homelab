@@ -1,0 +1,57 @@
+name: seafile
+services:
+  db:
+    image: mariadb:10.11
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_LOG_CONSOLE=true
+      - MARIADB_AUTO_UPGRADE=1
+    volumes:
+      - seafile-db:/var/lib/mysql
+    networks:
+      - seafile
+
+  memcached:
+    image: memcached:1.6.18
+    entrypoint: memcached -m 256
+    networks:
+      - seafile
+
+  seafile:
+    image: seafileltd/seafile-mc:10.0-latest
+    container_name: seafile
+    ports:
+      # - 8087:80
+      - 8086:443
+    volumes:
+      - ${SEAFILE_STORAGE_PATH}:/shared
+    environment:
+      DB_HOST: db
+      DB_ROOT_PASSWD: ${DB_ROOT_PASSWORD}
+      TIME_ZONE: Europe/Berlin
+      SEAFILE_ADMIN_EMAIL: ${SEAFILE_ADMIN_EMAIL}
+      SEAFILE_ADMIN_PASSWORD: ${SEAFILE_ADMIN_PASSWORD}
+      SEAFILE_SERVER_LETSENCRYPT: false
+      SEAFILE_SERVER_HOSTNAME: files.lab.beyerleinf.de
+      FORCE_HTTPS_IN_CONF: true
+    depends_on:
+      - db
+      - memcached
+    networks:
+      - traefik
+      - seafile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.seafile.rule=Host(`files.lab.beyerleinf.de`)"
+      - "traefik.http.routers.seafile.entrypoints=websecure"
+      - "traefik.http.routers.seafile.tls.certresolver=hetzner"
+
+networks:
+  seafile:
+    name: seafile
+  traefik:
+    name: traefik
+    external: true
+
+volumes:
+  seafile-db:
