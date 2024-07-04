@@ -21,7 +21,6 @@ services:
     image: seafileltd/seafile-mc:11.0-latest
     container_name: seafile
     ports:
-      # - 8087:80
       - 8086:443
     volumes:
       - ${SEAFILE_STORAGE_PATH}:/shared
