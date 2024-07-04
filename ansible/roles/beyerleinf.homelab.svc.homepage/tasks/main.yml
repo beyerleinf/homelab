@@ -29,6 +29,7 @@
       - docker-compose.yml
     state: stopped
     remove_volumes: true
+    remove_orphans: true
 
 - name: Delete old Docker directory
   ansible.builtin.file:
