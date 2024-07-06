@@ -1,17 +1,32 @@
 - Storage:
     - Seafile:
         icon: seafile.png
+        href: https://files.lab.beyerleinf.de
+        siteMonitor: https://files.lab.beyerleinf.de
+        server: arya
+        container: paperless-ngx-webserver
 
     - Paperless:
         icon: paperless-ngx.png
         href: https://paperless.lab.beyerleinf.de
         siteMonitor: https://paperless.lab.beyerleinf.de
         server: arya
-        container: paperless-ngx-webserver
+        container: seafile
         widget:
           type: paperlessngx
           url: https://paperless.lab.beyerleinf.de
           key: {{ paperless_api_key }}
+
+    - Immich:
+        icon: immich.png
+        href: https://pics.lab.beyerleinf.de
+        siteMonitor: https://pics.lab.beyerleinf.de
+        server: arya
+        container: immich-server
+        widget:
+          type: immich
+          url: https://pics.lab.beyerleinf.de
+          key: {{ immich_api_key }}
 
 - Media:
     - Jellyfin:

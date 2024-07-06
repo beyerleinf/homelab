@@ -41,3 +41,10 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.seafile
+
+- name: Deploy Immich
+  hosts: arya
+  tags: immich
+  become: true
+  roles:
+    - beyerleinf.homelab.svc.immich
