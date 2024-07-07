@@ -1,5 +1,5 @@
 ---
-# tasks file for beyerleinf.homelab.svc.seafile
+# tasks file for beyerleinf.homelab.svc.vault
 
 - name: Create temp directory
   ansible.builtin.file:
@@ -10,19 +10,13 @@
     mode: "777"
     recurse: true
 
-- name: Copy Docker env file
-  ansible.builtin.template:
-    src: files/.docker-env.j2
-    dest: "{{ tmp_dir }}/.env"
-    mode: "666"
-
 - name: Copy Docker Compose file
   ansible.builtin.copy:
     src: files/docker-compose.yml
     dest: "{{ tmp_dir }}/docker-compose.yml"
     mode: "666"
 
-- name: Stop Seafile
+- name: Stop Vault
   community.docker.docker_compose_v2:
     project_src: "{{ tmp_dir }}"
     files:
@@ -30,19 +24,17 @@
     state: stopped
     remove_orphans: true
 
-- name: Deploy Seafile
+- name: Deploy Vault
   community.docker.docker_compose_v2:
     project_src: "{{ tmp_dir }}"
     files:
       - docker-compose.yml
   register: output
 
-- name: Verify that Seafile is running
+- name: Verify that Vault is running
   ansible.builtin.assert:
     that:
       - "output.containers[0].State == 'running'"
-      - "output.containers[1].State == 'running'"
-      - "output.containers[2].State == 'running'"
 
 - name: Remove temp directory
   ansible.builtin.file:

@@ -1,0 +1,47 @@
+name: vault
+services:
+  vault:
+    image: vault:1.13.3
+    container_name: vault
+    restart: on-failure:3
+    environment:
+      VAULT_LOCAL_CONFIG: >
+        {
+          "ui": true,
+          "listener": [
+             {
+               "tcp": 
+                 {
+                   "address": "0.0.0.0:8200",
+                   "tls_disable": true
+                 }
+               }
+          ],
+          "storage": {
+            "file": {
+              "path": "/vault/file"
+            }
+           }
+          }
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - storage:/vault/file:rw
+    healthcheck:
+      retries: 5
+    command: server
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vault.rule=Host(`vault.lab.beyerleinf.de`)"
+      - "traefik.http.routers.vault.entrypoints=websecure"
+      - "traefik.http.routers.vault.tls.certresolver=hetzner"
+
+volumes:
+  storage:
+
+networks:
+  traefik:
+    name: traefik
+    external: true

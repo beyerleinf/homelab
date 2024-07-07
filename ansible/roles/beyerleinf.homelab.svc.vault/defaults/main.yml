@@ -1,0 +1,4 @@
+---
+# defaults file for beyerleinf.homelab.svc.vault
+
+tmp_dir: /tmp/vault

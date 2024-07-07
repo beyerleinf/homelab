@@ -48,3 +48,10 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.immich
+
+- name: Deploy Vault
+  hosts: arya
+  tags: vault
+  become: true
+  roles:
+    - beyerleinf.homelab.svc.vault

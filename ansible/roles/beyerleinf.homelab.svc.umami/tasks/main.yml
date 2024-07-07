@@ -28,7 +28,6 @@
     files:
       - docker-compose.yml
     state: stopped
-    remove_volumes: true
     remove_orphans: true
 
 - name: Deploy Umami
