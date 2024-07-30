@@ -41,7 +41,7 @@ services:
     restart: always
 
   redis:
-    image: docker.io/redis:7.2-alpine@sha256:de14eedfbd1fc871d0f5aa1773fd80743930e45354d035b6f3b551e7ffa44df8
+    image: docker.io/redis:7.4-alpine@sha256:a1d0b0a68f63588669fef9f22a46837de678eb78cb5b0d51bc352a55712e4200
     networks:
       - immich
     healthcheck:
