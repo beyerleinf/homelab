@@ -45,6 +45,39 @@ services:
       - "traefik.http.routers.seafile.entrypoints=websecure"
       - "traefik.http.routers.seafile.tls.certresolver=hetzner"
 
+  db-backup:
+    image: tiredofit/db-backup
+    environment:
+      TIMEZONE: "Europe/Berlin"
+      MODE: "MANUAL"
+      MANUAL_RUN_FOREVER: false
+      CONTAINER_ENABLE_SCHEDULING: false
+      CONTAINER_ENABLE_MONITORING: false
+      BACKUP_JOB_CONCURRENCY: 1
+      DEFAULT_COMPRESSION: "GZ"
+      DEFAULT_GZ_RSYNCABLE: true
+      DEFAULT_S3_BUCKET: ${S3_BUCKET_NAME}
+      DEFAULT_S3_KEY_ID: ${S3_BUCKET_KEY_ID}
+      DEFAULT_S3_KEY_SECRET: ${S3_BUCKET_KEY_SECRET}
+      DEFAULT_S3_REGION: ${S3_BUCKET_REGION}
+      DEFAULT_S3_HOST: ${S3_BUCKET_HOST}
+      ENABLE_NOTIFICATIONS: true
+      NOTIFICATION_TYPE: "MATRIX"
+      MATRIX_HOST: ${MATRIX_HOST}
+      MATRIX_ROOM: ${MATRIX_ROOM}
+      MATRIX_ACCESS_TOKEN: ${MATRIX_ACCESS_TOKEN}
+      DB01_TYPE: "mysql"
+      DB01_HOST: "db"
+      DB01_NAME: "ALL"
+      DB01_SPLIT_DB: true
+      DB01_BACKUP_LOCATION: "S3"
+      DB01_USER: root
+      DB01_PASS: ${DB_ROOT_PASSWORD}
+      DB01_S3_PATH: "db/seafile"
+      DB01_CLEANUP_TIME: 40320 # 28 days
+    networks:
+      - seafile
+
 networks:
   seafile:
     name: seafile
