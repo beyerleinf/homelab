@@ -9,7 +9,7 @@ services:
       - redisdata:/data
 
   db:
-    image: mariadb:11.4.2
+    image: mariadb:11.5.2
     restart: unless-stopped
     networks:
       - paperless
@@ -23,7 +23,7 @@ services:
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
 
   webserver:
-    image: ghcr.io/paperless-ngx/paperless-ngx:2.10.2
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.11.6
     container_name: paperless-ngx-webserver
     restart: unless-stopped
     networks:
