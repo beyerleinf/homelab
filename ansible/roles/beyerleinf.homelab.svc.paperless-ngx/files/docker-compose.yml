@@ -1,7 +1,7 @@
 name: paperless-ngx
 services:
   broker:
-    image: redis:7.2.5-alpine
+    image: redis:7.4.0-alpine
     restart: unless-stopped
     networks:
       - paperless
@@ -61,7 +61,7 @@ services:
       PAPERLESS_FILENAME_FORMAT: "{created}-{correspondent}-{title}"
 
   gotenberg:
-    image: gotenberg/gotenberg:8.8.0
+    image: gotenberg/gotenberg:8.9.1
     restart: unless-stopped
     networks:
       - paperless
