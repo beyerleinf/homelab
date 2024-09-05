@@ -34,8 +34,6 @@ services:
       - broker
       - gotenberg
       - tika
-    ports:
-      - 8000:8000
     volumes:
       - data:/usr/src/paperless/data
       - ${MEDIA_DIR}:/usr/src/paperless/media
