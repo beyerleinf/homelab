@@ -46,6 +46,17 @@
           expandOneStreamToTwoRows: false
 
 - Tools:
+    - PiHole:
+        icon: pi-hole.png
+        siteMonitor: http://pihole
+        server: arya
+        container: pihole
+        widget:
+          type: pihole
+          url: http://pihole
+          version: 5
+          key: {{ pihole_api_key }}
+
     - Umami:
         icon: umami-light.png
         href: https://umami.lab.beyerleinf.de

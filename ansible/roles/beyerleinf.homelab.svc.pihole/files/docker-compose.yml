@@ -1,0 +1,31 @@
+name: pihole
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:2024.07.0
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8080:80"
+    networks:
+      - traefik
+      - pihole
+    volumes:
+      - pihole:/etc/pihole
+      - dnsmasqd:/etc/dsnmasq.d
+      - ${BACKUP_DIR}:/backups
+    environment:
+      TZ: "Europe/Berlin"
+      DNSMASQ_LISTENING: "all"
+
+volumes:
+  pihole:
+  dnsmasqd:
+
+networks:
+  pihole:
+  traefik:
+    external: true

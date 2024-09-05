@@ -76,3 +76,10 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.servarr
+
+- name: Deploy PiHole
+  hosts: arya
+  tags: pihole
+  become: true
+  roles:
+    - beyerleinf.homelab.svc.pihole

@@ -1,0 +1,5 @@
+---
+# defaults file for beyerleinf.homelab.svc.pihole
+
+tmp_dir: "/tmp/pihole"
+backup_dir: "/mnt/user/backups/pihole"

@@ -1,5 +1,5 @@
 ---
-# tasks file for beyerleinf.homelab.svc.servarr
+# tasks file for beyerleinf.homelab.svc.pihole
 
 - name: Create temp directory
   ansible.builtin.file:
@@ -22,7 +22,7 @@
     dest: "{{ tmp_dir }}/docker-compose.yml"
     mode: "666"
 
-- name: Stop Servarr
+- name: Stop PiHole
   community.docker.docker_compose_v2:
     project_src: "{{ tmp_dir }}"
     files:
@@ -30,21 +30,17 @@
     state: stopped
     remove_orphans: true
 
-- name: Deploy Servarr
+- name: Deploy PiHole
   community.docker.docker_compose_v2:
     project_src: "{{ tmp_dir }}"
     files:
       - docker-compose.yml
   register: output
 
-- name: Verify that Servarr is running
+- name: Verify that PiHole is running
   ansible.builtin.assert:
     that:
       - "output.containers[0].State == 'running'"
-      - "output.containers[1].State == 'running'"
-      - "output.containers[2].State == 'running'"
-      - "output.containers[3].State == 'running'"
-      - "output.containers[4].State == 'running'"
 
 - name: Remove temp directory
   ansible.builtin.file:
