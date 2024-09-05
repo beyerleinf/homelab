@@ -1,0 +1,12 @@
+---
+# defaults file for beyerleinf.homelab.svc.servarr
+tmp_dir: "/tmp/servarr"
+tvshows_dir: "/mnt/user/jellyfin/tvshows"
+movies_dir: "/mnt/user/jellyfin/movies"
+music_dir: "/mnt/user/jellyfin/music"
+sonarr_dir: "{{ docker_base_path }}/sonarr"
+radarr_dir: "{{ docker_base_path }}/radarr"
+lidarr_dir: "{{ docker_base_path }}/lidarr"
+flaresolverr_dir: "{{ docker_base_path }}/flaresolverr"
+prowlarr_dir: "{{ docker_base_path }}/prowlarr"
+deluge_dir: "/mnt/user/deluge-downloads"

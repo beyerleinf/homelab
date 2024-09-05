@@ -1,0 +1,89 @@
+name: servarr
+services:
+  flaresolverr:
+    container_name: flaresolverr
+    image: binhex/arch-flaresolverr:3.3.21-1-02
+    ports:
+      - "8191:8191"
+    networks:
+      - internal
+      - deluge
+    volumes:
+      - ${FLARESOLVERR_DIR}:/config
+    environment:
+      UMASK: 000
+      PUID: 99
+      PGID: 100
+
+  prowlarr:
+    container_name: prowlarr
+    image: binhex/arch-prowlarr:1.23.1.4708-1-01
+    ports:
+      - "9696:9696"
+    networks:
+      - internal
+      - deluge
+    volumes:
+      - ${PROWLARR_DIR}:/config
+    environment:
+      UMASK: 000
+      PUID: 99
+      PGID: 100
+
+  sonarr:
+    container_name: sonarr
+    image: binhex/arch-sonarr:4.0.9.2244-1-01
+    ports:
+      - "8989:8989"
+      - "9897:9897"
+    networks:
+      - internal
+      - deluge
+    volumes:
+      - ${TVSHOWS_DIR}:/media
+      - ${DELUGE_DIR}:/data
+      - ${SONARR_DIR}:/config
+    environment:
+      UMASK: 000
+      PUID: 99
+      PGID: 100
+
+  radarr:
+    container_name: radarr
+    image: binhex/arch-radarr:5.9.1.9070-1-01
+    ports:
+      - "7878:7878"
+    networks:
+      - internal
+      - deluge
+    volumes:
+      - ${MOVIES_DIR}:/media
+      - ${DELUGE_DIR}:/data
+      - ${RADARR_DIR}:/config
+    environment:
+      UMASK: 000
+      PUID: 99
+      PGID: 100
+
+  lidarr:
+    container_name: lidarr
+    image: binhex/arch-lidarr:2.5.3.4341-1-02
+    ports:
+      - "8686:8686"
+    networks:
+      - internal
+      - deluge
+    volumes:
+      - ${MUSIC_DIR}:/media
+      - ${DELUGE_DIR}:/data
+      - ${LIDARR_DIR}:/config
+    environment:
+      UMASK: 000
+      PUID: 99
+      PGID: 100
+
+networks:
+  deluge:
+    external: true
+  internal:
+    external: true

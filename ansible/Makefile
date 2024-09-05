@@ -1,4 +1,4 @@
-.PHONY: create_role install_role install_roles list_roles remove_role run_playbook deploy deploy_infrastructure deploy_homepage deploy_paperless deploy_umami deploy_jellyfin deploy_seafile deploy_immich deploy_vault deploy_deluge
+.PHONY: create_role install_role install_roles list_roles remove_role run_playbook deploy deploy_infrastructure deploy_homepage deploy_paperless deploy_umami deploy_jellyfin deploy_seafile deploy_immich deploy_vault deploy_deluge deploy_servarr
 
 create_role:
 	ansible-galaxy init $(role) --init-path=./roles
@@ -44,4 +44,8 @@ deploy_vault:
 
 deploy_deluge:
 	ansible-playbook site.yml --tags=deluge $(cmd)
+
+deploy_servarr:
+	ansible-playbook site.yml --tags=servarr $(cmd)
+
 

@@ -1,4 +1,11 @@
 ---
+- name: Common settings
+  hosts: arya
+  tags: always
+  become: true
+  roles:
+    - beyerleinf.homelab.common
+
 - name: Deploy Infrastructure
   hosts: arya
   tags: infrastructure
@@ -62,3 +69,10 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.deluge
+
+- name: Deploy Servarr
+  hosts: arya
+  tags: servarr
+  become: true
+  roles:
+    - beyerleinf.homelab.svc.servarr

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Running document export
-docker exec paperless-ngx-webserver document_exporter /usr/src/paperless/export -na -nt -p
-# Finished document export
+echo "Running document export"
+docker exec paperless-ngx-webserver document_exporter /usr/src/paperless/export -na -nt -p --no-progress-bar
+echo "Finished document export"
 
-# Uploading export
-rclone sync /mnt/docker/paperless-ngx/export backblaze:AryaBackup/paperless
-# Finished uploading export
+echo "Uploading export"
+rclone sync /mnt/user/docker/paperless-ngx/export backblaze:AryaBackup/paperless
+echo "Finished uploading export"

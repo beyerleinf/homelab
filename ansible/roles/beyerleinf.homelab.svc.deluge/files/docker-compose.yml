@@ -2,13 +2,16 @@ name: delugevpn
 services:
   deluge:
     container_name: delugevpn
-    image: binhex/arch-delugevpn
+    image: binhex/arch-delugevpn:2.1.1-6-05
     privileged: true
     ports:
       - "8112:8112"
       - "8118:8118"
       - "9118:9118"
       - "58846:58846"
+    networks:
+      - internal
+      - deluge
     volumes:
       - ${CONFIG_DIR}:/config
       - ${DATA_DIR}:/data
@@ -26,3 +29,9 @@ services:
       USERSPACE_WIREGUARD: "no"
       ENABLE_SOCKS: "no"
       LAN_NETWORK: "10.0.0.0/24"
+
+networks:
+  deluge:
+    name: deluge
+  internal:
+    external: true

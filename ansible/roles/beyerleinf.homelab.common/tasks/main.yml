@@ -1,34 +1,6 @@
 ---
 # tasks file for beyerleinf.homelab.common
-- name: Set timezone
-  community.general.timezone:
-    name: "{{ system_timezone }}"
-  when: (system_timezone is defined) and (system_timezone != "Your/Timezone")
 
-- name: Populate service facts
-  ansible.builtin.service_facts:
-
-- name: Install Basic Packages
-  ansible.builtin.apt:
-    pkg:
-      - nano
-      - htop
-      - openssh-server
-      - qemu-guest-agent
-      - iputils-ping
-      - python3-pip
-    state: present
-    update_cache: true
-
-- name: Update packages
-  ansible.builtin.apt:
-    upgrade: safe
-    update_cache: true
-
-- name: Disable Snap
-  ansible.builtin.import_tasks: disable-snap.yml
-  when: "'snapd' in ansible_facts.services"
-
-- name: Disable multipathd
-  ansible.builtin.import_tasks: disable-multipathd.yml
-  when: "'multipathd' in ansible_facts.services"
+# - name: Create internal docker network
+#   community.docker.docker_network:
+#     name: internal

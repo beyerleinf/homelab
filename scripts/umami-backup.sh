@@ -1,6 +1,5 @@
-
 #!/bin/bash
 
-# Backing up Umami database
+echo "Backing up Umami database"
 docker exec umami-db-backup-1 backup-now
-# Finished backing up Umami database
+echo "Finished backing up Umami database"
