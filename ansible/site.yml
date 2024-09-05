@@ -55,3 +55,10 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.vault
+
+- name: Deploy Deluge
+  hosts: arya
+  tags: deluge
+  become: true
+  roles:
+    - beyerleinf.homelab.svc.deluge

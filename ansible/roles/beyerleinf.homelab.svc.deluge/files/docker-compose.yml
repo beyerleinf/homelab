@@ -1,0 +1,28 @@
+name: delugevpn
+services:
+  deluge:
+    container_name: delugevpn
+    image: binhex/arch-delugevpn
+    privileged: true
+    ports:
+      - "8112:8112"
+      - "8118:8118"
+      - "9118:9118"
+      - "58846:58846"
+    volumes:
+      - ${CONFIG_DIR}:/config
+      - ${DATA_DIR}:/data
+    cap_add:
+      - NET_ADMIN
+    environment:
+      VPN_ENABLED: true
+      VPN_PROV: "pia"
+      VPN_USER: ${VPN_USER}
+      VPN_PASS: ${VPN_PASS}
+      VPN_CLIENT: "openvpn"
+      ENABLE_STARTUP_SCRIPTS: "no"
+      ENABLE_PRIVOXY: "yes"
+      STRICT_PORT_FORWARD: "yes"
+      USERSPACE_WIREGUARD: "no"
+      ENABLE_SOCKS: "no"
+      LAN_NETWORK: "10.0.0.0/24"
