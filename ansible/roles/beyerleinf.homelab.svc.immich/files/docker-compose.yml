@@ -26,7 +26,7 @@ services:
 
   immich-machine-learning:
     # For hardware acceleration, add one of -[armnn, cuda, openvino] to the image tag.
-    image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}-cuda
+    image: ghcr.io/immich-app/immich-machine-learning:v.113.1-cuda
     networks:
       - immich
     extends: # see https://immich.app/docs/features/ml-hardware-acceleration
@@ -79,6 +79,40 @@ services:
         "wal_compression=on",
       ]
     restart: always
+
+  db-backup:
+    image: tiredofit/db-backup:4.1.4
+    environment:
+      TIMEZONE: "Europe/Berlin"
+      MODE: "MANUAL"
+      DEBUG_MODE: true
+      MANUAL_RUN_FOREVER: false
+      CONTAINER_ENABLE_SCHEDULING: false
+      CONTAINER_ENABLE_MONITORING: false
+      BACKUP_JOB_CONCURRENCY: 1
+      DEFAULT_COMPRESSION: "GZ"
+      DEFAULT_GZ_RSYNCABLE: true
+      DEFAULT_S3_BUCKET: ${S3_BUCKET_NAME}
+      DEFAULT_S3_KEY_ID: ${S3_BUCKET_KEY_ID}
+      DEFAULT_S3_KEY_SECRET: ${S3_BUCKET_KEY_SECRET}
+      DEFAULT_S3_REGION: ${S3_BUCKET_REGION}
+      DEFAULT_S3_HOST: ${S3_BUCKET_HOST}
+      ENABLE_NOTIFICATIONS: true
+      NOTIFICATION_TYPE: "MATRIX"
+      MATRIX_HOST: ${MATRIX_HOST}
+      MATRIX_ROOM: ${MATRIX_ROOM}
+      MATRIX_ACCESS_TOKEN: ${MATRIX_ACCESS_TOKEN}
+      DB01_TYPE: "pgsql"
+      DB01_HOST: "database"
+      DB01_NAME: ${DB_DATABASE_NAME}
+      DB01_SPLIT_DB: true
+      DB01_BACKUP_LOCATION: "S3"
+      DB01_USER: ${DB_USERNAME}
+      DB01_PASS: ${DB_PASSWORD}
+      DB01_S3_PATH: "db/immich"
+      DB01_CLEANUP_TIME: 40320 # 28 days
+    networks:
+      - immich
 
 volumes:
   model-cache:
