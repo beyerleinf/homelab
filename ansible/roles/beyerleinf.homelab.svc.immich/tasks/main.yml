@@ -10,6 +10,11 @@
     mode: "777"
     recurse: true
 
+- name: Check upload directory
+  ansible.builtin.stat:
+    path: "{{ immich_upload_dir }}"
+  register: upload_dir
+
 - name: Ensure upload directory exists
   ansible.builtin.file:
     path: "{{ immich_upload_dir }}"
@@ -18,6 +23,7 @@
     group: root
     mode: "777"
     recurse: true
+  when: not upload_dir.stat.exists
 
 - name: Copy Docker env file
   ansible.builtin.template:
