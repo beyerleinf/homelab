@@ -1,0 +1,5 @@
+---
+# defaults file for beyerleinf.homelab.svc.actual-budget
+
+tmp_dir: "/tmp/actual"
+docker_dir: "{{ docker_base_path }}/actual-budget"

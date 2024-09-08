@@ -1,0 +1,48 @@
+name: maybe
+services:
+  maybe:
+    container_name: maybe
+    image: ghcr.io/maybe-finance/maybe:0.1.0-alpha.16
+    networks:
+      - traefik
+      - maybe
+    ports:
+      - "3000:3000"
+    environment:
+      SELF_HOSTING_ENABLED: true
+      RAILS_FORCE_SSL: false
+      RAILS_ASSUME_SSL: false
+      GOOD_JOB_EXECUTION_MODE: "async"
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      DB_HOST: postgres
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16.4-alpine
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - maybe
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres-data:
+
+networks:
+  maybe:
+    name: maybe
+  traefik:
+    external: true
