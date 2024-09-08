@@ -1,5 +1,5 @@
 ---
-# tasks file for beyerleinf.homelab.svc.traefik
+# tasks file for beyerleinf.homelab.svc.unifi
 
 - name: Create temp directory
   ansible.builtin.file:
@@ -7,7 +7,7 @@
     state: directory
     owner: root
     group: root
-    mode: "666"
+    mode: "777"
     recurse: true
 
 - name: Ensure docker directory exists
@@ -16,16 +16,16 @@
     state: directory
     owner: root
     group: root
-    mode: "666"
+    mode: "777"
     recurse: true
 
-- name: Ensure config directory exists
+- name: Ensure docker/init.d directory exists
   ansible.builtin.file:
-    path: "{{ docker_dir }}/conf"
+    path: "{{ docker_dir }}/init.d"
     state: directory
     owner: root
     group: root
-    mode: "666"
+    mode: "777"
     recurse: true
 
 - name: Copy Docker env file
@@ -40,39 +40,35 @@
     dest: "{{ tmp_dir }}/docker-compose.yml"
     mode: "666"
 
-- name: Copy traefik.yml
+- name: Copy init-mongo.sh
   ansible.builtin.copy:
-    src: files/traefik/traefik.yml
-    dest: "{{ docker_dir }}/traefik.yml"
-    mode: "666"
+    src: files/init-mongo.sh
+    dest: "{{ docker_dir }}/init.d/init-mongo.sh"
+    mode: "777"
 
-- name: Copy conf/http.yml
-  ansible.builtin.copy:
-    src: files/traefik/conf/http.yml
-    dest: "{{ docker_dir }}/conf/http.yml"
-    mode: "666"
-
-- name: Stop Traefik
+- name: Stop UniFi
   community.docker.docker_compose_v2:
     project_src: "{{ tmp_dir }}"
     files:
       - docker-compose.yml
-    state: stopped
+    state: absent
     remove_orphans: true
+    recreate: "always"
 
-- name: Deploy Traefik
+- name: Deploy UniFi
   community.docker.docker_compose_v2:
     project_src: "{{ tmp_dir }}"
     files:
       - docker-compose.yml
   register: output
 
-- name: Verify that Traefik is running
+- name: Verify that UniFi is running
   ansible.builtin.assert:
     that:
       - "output.containers[0].State == 'running'"
-
-- name: Remove temp directory
-  ansible.builtin.file:
-    path: "{{ tmp_dir }}"
-    state: absent
+      - "output.containers[1].State == 'running'"
+#
+# - name: Remove temp directory
+#   ansible.builtin.file:
+#     path: "{{ tmp_dir }}"
+#     state: absent

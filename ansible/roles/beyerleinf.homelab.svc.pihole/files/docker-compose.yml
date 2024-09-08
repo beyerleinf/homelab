@@ -9,7 +9,7 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "8080:80"
+      - "8088:80"
     networks:
       - traefik
       - pihole
@@ -27,5 +27,6 @@ volumes:
 
 networks:
   pihole:
+    name: pihole
   traefik:
     external: true

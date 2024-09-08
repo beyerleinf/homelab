@@ -1,7 +1,8 @@
 ---
 # defaults file for beyerleinf.homelab.svc.traefik
 
-tmp_dir: /tmp/traefik
+tmp_dir: "/tmp/traefik"
+docker_dir: "{{ docker_base_path }}/traefik"
 hetzner_api_key: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   36343161313731353232393939623135353565656166363764393739383865373062636363333466

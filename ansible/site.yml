@@ -83,3 +83,10 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.pihole
+
+- name: Deploy UniFi
+  hosts: arya
+  tags: unifi
+  become: true
+  roles:
+    - beyerleinf.homelab.svc.unifi

@@ -1,0 +1,6 @@
+http:
+  middlewares:
+    unifi-headers:
+      headers:
+        customRequestHeaders:
+          Authorization: "" # Remove Authorization header

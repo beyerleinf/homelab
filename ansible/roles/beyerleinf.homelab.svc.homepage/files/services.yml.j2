@@ -48,6 +48,7 @@
 - Tools:
     - PiHole:
         icon: pi-hole.png
+        href: http://10.0.0.222:8088
         siteMonitor: http://pihole
         server: arya
         container: pihole
@@ -56,6 +57,18 @@
           url: http://pihole
           version: 5
           key: {{ pihole_api_key }}
+
+    - UniFi:
+        icon: unifi.png
+        href: "https://unifi.lab.beyerleinf.de"
+        siteMonitor: https://unifi.lab.beyerleinf.de
+        server: arya
+        container: unifi-network-application
+        widget:
+          type: unifi
+          url: https://unifi.lab.beyerleinf.de
+          username: {{ unifi_username }}
+          password: {{ unifi_password }}
 
     - Umami:
         icon: umami-light.png
