@@ -1,0 +1,62 @@
+---
+# tasks file for beyerleinf.homelab.svc.firefly
+
+- name: Create temp directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "777"
+    recurse: true
+
+- name: Copy Docker env file
+  ansible.builtin.template:
+    src: files/.docker-env.j2
+    dest: "{{ tmp_dir }}/.env"
+    mode: "666"
+
+- name: Copy Docker Compose file
+  ansible.builtin.copy:
+    src: files/docker-compose.yml
+    dest: "{{ tmp_dir }}/docker-compose.yml"
+    mode: "666"
+
+- name: Destroy Firefly
+  community.docker.docker_compose_v2:
+    project_src: "{{ tmp_dir }}"
+    files:
+      - docker-compose.yml
+    state: absent
+    remove_volumes: true
+    remove_orphans: true
+  when: state == 'down'
+
+- name: Stop Firefly
+  community.docker.docker_compose_v2:
+    project_src: "{{ tmp_dir }}"
+    files:
+      - docker-compose.yml
+    state: stopped
+    remove_orphans: true
+  when: state == 'up'
+
+- name: Deploy Firefly
+  community.docker.docker_compose_v2:
+    project_src: "{{ tmp_dir }}"
+    files:
+      - docker-compose.yml
+  register: output
+  when: state == 'up'
+
+- name: Verify that Firefly is running
+  ansible.builtin.assert:
+    that:
+      - "output.containers[0].State == 'running'"
+      - "output.containers[1].State == 'running'"
+  when: state == 'up'
+
+- name: Remove temp directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: absent

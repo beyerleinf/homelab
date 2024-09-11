@@ -104,3 +104,10 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.actual-budget
+
+- name: Deploy Firefly III
+  hosts: arya
+  tags: firefly
+  become: true
+  roles:
+    - beyerleinf.homelab.svc.firefly
