@@ -1,0 +1,97 @@
+name: authentik
+services:
+  db-pg16:
+    image: postgres:16.4-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    networks:
+      - authentik
+    volumes:
+      - database-pg16:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  redis:
+    image: redis:7.4.0-alpine
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    networks:
+      - authentik
+    volumes:
+      - redis:/data
+
+  authentik-server:
+    image: ghcr.io/goauthentik/server:2024.8.1
+    restart: unless-stopped
+    command: server
+    environment:
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: db-pg16
+      AUTHENTIK_POSTGRESQL__NAME: ${POSTGRES_DB}
+      AUTHENTIK_POSTGRESQL__USER: ${POSTGRES_USER}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${POSTGRES_PASSWORD}
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+    networks:
+      - authentik
+      - traefik
+    volumes:
+      - ${MEDIA_DIR}:/media
+      - ${TEMPLATES_DIR}:/templates
+    # ports:
+    #   - "9000:9000"
+    #   - "9443:9443"
+    depends_on:
+      - db-pg16
+      - redis
+    labels:
+      traefik.enable: true
+      traefik.http.routers.authentik.rule: "Host(`authentik.lab.beyerleinf.de`) || PathPrefix(`/outpost.goauthentik.io/)"
+      traefik.http.routers.authentik.entrypoints: "websecure"
+      traefik.http.routers.authentik.tls.certresolver: "hetzner"
+      traefik.http.services.authentik.loadbalancer.server.port: "9000"
+
+  authentik-worker:
+    image: ghcr.io/goauthentik/server:2024.8.1
+    restart: unless-stopped
+    command: worker
+    environment:
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: db-pg16
+      AUTHENTIK_POSTGRESQL__NAME: ${POSTGRES_DB}
+      AUTHENTIK_POSTGRESQL__USER: ${POSTGRES_USER}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${POSTGRES_PASSWORD}
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+    user: root
+    networks:
+      - authentik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${MEDIA_DIR}:/media
+      - ${TEMPLATES_DIR}:/templates
+      - ${CERTS_DIR}:/certs
+    depends_on:
+      - db-pg16
+      - redis
+
+volumes:
+  database-pg16:
+  redis:
+
+networks:
+  authentik:
+    name: authentik
+  traefik:
+    external: true

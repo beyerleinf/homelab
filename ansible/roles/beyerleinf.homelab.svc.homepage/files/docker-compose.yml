@@ -10,10 +10,11 @@ services:
       - ${DOCKER_DIR}:/app/config
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.homepage.rule=Host(`home.lab.beyerleinf.de`)"
-      - "traefik.http.routers.homepage.entrypoints=websecure"
-      - "traefik.http.routers.homepage.tls.certresolver=hetzner"
+      traefik.enable: true
+      traefik.http.routers.homepage.rule: "Host(`home.lab.beyerleinf.de`)"
+      traefik.http.routers.homepage.entrypoints: "websecure"
+      traefik.http.routers.homepage.tls.certresolver: "hetzner"
+      traefik.http.routers.traefik.middlewares: "authentik@file"
 
 volumes:
   homepage:

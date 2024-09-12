@@ -1,5 +1,5 @@
 api:
-  insecure: true
+  dashboard: true
 
 providers:
   docker:
@@ -29,3 +29,10 @@ certificatesResolvers:
 
 serversTransport:
   insecureSkipVerify: true
+
+accessLog:
+  filters:
+    statusCodes:
+      - "400-600"
+    retryAttempts: true
+    minDuration: "50ms"

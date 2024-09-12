@@ -8,14 +8,37 @@ services:
       - traefik
     ports:
       - "4443:4443"
-      - "8089:8080"
+      # - "8089:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - acme:/acme
       - ${DOCKER_DIR}/traefik.yml:/etc/traefik/traefik.yml
       - ${DOCKER_DIR}/conf/http.yml:/etc/traefik/conf/http.yml
     restart: unless-stopped
+    labels:
+      traefik.enable: true
+      traefik.http.routers.traefik.entrypoints: "websecure"
+      traefik.http.routers.traefik.rule: "Host(`traefik.lab.beyerleinf.de`)"
+      traefik.http.routers.traefik.service: "api@internal"
+      traefik.http.routers.traefik.middlewares: "authentik@file"
+      traefik.http.routers.traefik.tls.certresolver: "hetzner"
 
+  # authentik-proxy:
+  #   image: ghcr.io/goauthentik/proxy:2024.8.1
+  #   container_name: "authentik-proxy"
+  #   environment:
+  #     AUTHENTIK_HOST: "http://authentik-server:9000"
+  #     AUTHENTIK_HOST_BROWSER: "https://auth.lab.beyerleinf.de"
+  #     AUTHENTIK_INSECURE: false
+  #     AUTHENTIK_TOKEN: ${AUTHENTIK_TOKEN}
+  #   networks:
+  #     - traefik
+  #   labels:
+  #     traefik.enable: true
+  #     traefik.http.routers.authentik-proxy.entrypoints: "websecure"
+  #     traefik.http.routers.authentik-proxy.rule: "Host(`auth.lab.beyerleinf.de`) && PathPrefix(`/outpost.goauthentik.io`)"
+  #     traefik.http.routers.authentik-proxy.tls.certresolver: "hetzner"
+  #
 volumes:
   acme:
 
