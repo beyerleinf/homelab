@@ -12,6 +12,7 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.hetzner-ddns
+    # - beyerleinf.homelab.svc.authentik
     - beyerleinf.homelab.svc.traefik
 
 - name: Deploy Homepage
@@ -111,3 +112,10 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.firefly
+
+- name: Deploy TubeArchivist
+  hosts: arya
+  tags: tubearchivist
+  become: true
+  roles:
+    - beyerleinf.homelab.svc.tube-archivist

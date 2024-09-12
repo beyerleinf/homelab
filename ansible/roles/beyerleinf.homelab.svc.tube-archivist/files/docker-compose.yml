@@ -1,0 +1,59 @@
+name: tube-archivist
+services:
+  tubearchivist:
+    container_name: tubearchivist
+    restart: unless-stopped
+    image: bbilly1/tubearchivist
+    ports:
+      - 8000:8000
+    volumes:
+      - ${MEDIA_DIR}:/youtube
+      - cache:/cache
+    environment:
+      ES_URL: "http://archivist-es:9200"
+      REDIS_HOST: "archivist-redis"
+      HOST_UID: 1000
+      HOST_GID: 1000
+      TA_HOST: "10.0.0.222"
+      TA_USERNAME: ${TA_ROOT_USER}
+      TA_PASSWORD: ${TA_ROOT_PASSWORD}
+      ELASTIC_PASSWORD: ${ELASTIC_SEARCH_PASSWORD}
+      TZ: "Europe/Berlin"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 2m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    depends_on:
+      - archivist-es
+      - archivist-redis
+
+  archivist-redis:
+    image: redis/redis-stack-server
+    restart: unless-stopped
+    volumes:
+      - redis:/data
+    depends_on:
+      - archivist-es
+
+  archivist-es:
+    image: bbilly1/tubearchivist-es # only for amd64, or use official es 8.14.3
+    restart: unless-stopped
+    environment:
+      ELASTIC_PASSWORD: ${ELASTIC_SEARCH_PASSWORD}
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+      xpack.security.enabled: true
+      discovery.type: "single-node"
+      path.repo: "/usr/share/elasticsearch/data/snapshot"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es:/usr/share/elasticsearch/data # check for permission error when using bind mount, see readme
+
+volumes:
+  cache:
+  redis:
+  es:

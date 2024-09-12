@@ -65,3 +65,7 @@ deploy_firefly:
 
 destroy_firefly:
 	ansible-playbook site.yml --tags=firefly -e state=down $(cmd)
+
+.PHONY: deploy_tubearchivist
+deploy_tubearchivist:
+	ansible-playbook site.yml --tags=tubearchivist $(cmd)
