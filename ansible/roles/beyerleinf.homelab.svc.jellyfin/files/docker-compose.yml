@@ -22,6 +22,7 @@ services:
       - ${MOVIES_DIR}:/data/movies
       - ${TVSHOWS_DIR}:/data/tvshows
       - ${MUSIC_DIR}:/data/music
+      - ${YOUTUBE_DIR}:/data/youtube
     restart: "unless-stopped"
     environment:
       JELLYFIN_PublishedServerUrl: ${DISCOVERY_IP}
