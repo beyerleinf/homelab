@@ -69,3 +69,7 @@ destroy_firefly:
 .PHONY: deploy_tubearchivist
 deploy_tubearchivist:
 	ansible-playbook site.yml --tags=tubearchivist $(cmd)
+
+.PHONY: deploy_portainer
+deploy_portainer:
+	ansible-playbook site.yml --tags=portainer $(cmd)

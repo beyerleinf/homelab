@@ -1,0 +1,4 @@
+---
+# defaults file for beyerleinf.homelab.svc.portainer
+
+tmp_dir: "/tmp/portainer"

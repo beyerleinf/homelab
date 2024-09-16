@@ -12,8 +12,9 @@
   become: true
   roles:
     - beyerleinf.homelab.svc.hetzner-ddns
-    # - beyerleinf.homelab.svc.authentik
+    - beyerleinf.homelab.svc.authentik
     - beyerleinf.homelab.svc.traefik
+    - beyerleinf.homelab.svc.portainer
 
 - name: Deploy Homepage
   hosts: arya
