@@ -4,22 +4,34 @@ services:
     container_name: homepage
     networks:
       - traefik
-    ports:
-      - 3003:3000
+      - homepage
     volumes:
       - ${DOCKER_DIR}:/app/config
-      - /var/run/docker.sock:/var/run/docker.sock
     labels:
       traefik.enable: true
       traefik.http.routers.homepage.rule: "Host(`home.lab.beyerleinf.de`)"
       traefik.http.routers.homepage.entrypoints: "websecure"
       traefik.http.routers.homepage.tls.certresolver: "hetzner"
-      traefik.http.routers.traefik.middlewares: "authentik@file"
+      traefik.http.routers.homepage.middlewares: "authentik@file"
+
+  dockerproxy:
+    image: ghcr.io/tecnativa/docker-socket-proxy:0.3.0
+    restart: unless-stopped
+    environment:
+      CONTAINERS: 1 # Allow access to viewing containers
+      SERVICES: 1 # Allow access to viewing services (necessary when using Docker Swarm)
+      TASKS: 1 # Allow access to viewing tasks (necessary when using Docker Swarm)
+      POST: 0 # Disallow any POST operations (effectively read-only)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Mounted as read-only
+    networks:
+      - homepage
 
 volumes:
   homepage:
 
 networks:
+  homepage:
+    name: homepage
   traefik:
-    name: traefik
     external: true
