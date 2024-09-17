@@ -25,8 +25,8 @@ services:
       MONGO_PORT: 27017
       MONGO_AUTHSOURCE: ${MONGODB_DB_NAME}
       MONGO_TLS: false
-      MEM_LIMIT: 1024
-      MEM_STARTUP: 1024
+      MEM_LIMIT: 786
+      MEM_STARTUP: 786
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 30s
