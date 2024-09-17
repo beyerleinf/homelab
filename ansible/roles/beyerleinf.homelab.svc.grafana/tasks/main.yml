@@ -1,0 +1,136 @@
+---
+# tasks file for beyerleinf.homelab.svc.grafana
+
+- name: Create temp directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "777"
+    recurse: true
+
+- name: Check docker directory
+  ansible.builtin.stat:
+    path: "{{ docker_dir }}"
+  register: docker_dir_check
+
+- name: Ensure docker directory exists
+  ansible.builtin.file:
+    path: "{{ docker_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "777"
+    recurse: true
+  when: not docker_dir_check.stat.exists
+
+- name: Check grafana directory
+  ansible.builtin.stat:
+    path: "{{ grafana_dir }}"
+  register: grafana_dir_check
+
+- name: Ensure grafana directory exists
+  ansible.builtin.file:
+    path: "{{ grafana_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "777"
+    recurse: true
+  when: not grafana_dir_check.stat.exists
+
+- name: Check grafana data directory
+  ansible.builtin.stat:
+    path: "{{ grafana_data_dir }}"
+  register: grafana_data_dir_check
+
+- name: Ensure grafana data directory exists
+  ansible.builtin.file:
+    path: "{{ grafana_data_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "777"
+    recurse: true
+  when: not grafana_data_dir_check.stat.exists
+
+- name: Check prometheus data directory
+  ansible.builtin.stat:
+    path: "{{ prometheus_data_dir }}"
+  register: prometheus_data_dir_check
+
+- name: Ensure prometheus data directory exists
+  ansible.builtin.file:
+    path: "{{ prometheus_data_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "777"
+    recurse: true
+  when: not prometheus_data_dir_check.stat.exists
+
+- name: Check prometheus directory
+  ansible.builtin.stat:
+    path: "{{ prometheus_dir }}"
+  register: prometheus_dir_check
+
+- name: Ensure prometheus directory exists
+  ansible.builtin.file:
+    path: "{{ prometheus_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "777"
+    recurse: true
+  when: not prometheus_dir_check.stat.exists
+
+- name: Copy Docker env file
+  ansible.builtin.template:
+    src: files/.docker-env.j2
+    dest: "{{ tmp_dir }}/.env"
+    mode: "666"
+
+- name: Copy Docker Compose file
+  ansible.builtin.copy:
+    src: files/docker-compose.yml
+    dest: "{{ tmp_dir }}/docker-compose.yml"
+    mode: "666"
+
+- name: Copy Grafana provisioning files
+  ansible.builtin.copy:
+    src: files/grafana/
+    dest: "{{ grafana_dir }}/"
+    mode: "666"
+
+- name: Copy Prometheus config
+  ansible.builtin.copy:
+    src: files/prometheus/
+    dest: "{{ prometheus_dir }}/"
+    mode: "666"
+
+- name: Stop Grafana
+  community.docker.docker_compose_v2:
+    project_src: "{{ tmp_dir }}"
+    files:
+      - docker-compose.yml
+    state: stopped
+    remove_orphans: true
+
+- name: Deploy Grafana
+  community.docker.docker_compose_v2:
+    project_src: "{{ tmp_dir }}"
+    files:
+      - docker-compose.yml
+  register: output
+
+- name: Verify that Grafana is running
+  ansible.builtin.assert:
+    that:
+      - "output.containers[0].State == 'running'"
+      - "output.containers[1].State == 'running'"
+
+- name: Remove temp directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: absent

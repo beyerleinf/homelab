@@ -73,3 +73,7 @@ deploy_tubearchivist:
 .PHONY: deploy_portainer
 deploy_portainer:
 	ansible-playbook site.yml --tags=portainer $(cmd)
+
+.PHONY: deploy_grafana
+deploy_grafana:
+	ansible-playbook site.yml --tags=grafana $(cmd)
