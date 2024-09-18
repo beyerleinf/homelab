@@ -85,7 +85,6 @@ services:
     environment:
       TIMEZONE: "Europe/Berlin"
       MODE: "MANUAL"
-      DEBUG_MODE: true
       MANUAL_RUN_FOREVER: false
       CONTAINER_ENABLE_SCHEDULING: false
       CONTAINER_ENABLE_MONITORING: false

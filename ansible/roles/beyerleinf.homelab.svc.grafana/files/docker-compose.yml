@@ -33,6 +33,7 @@ services:
       - node-exporter
     networks:
       - grafana
+      - traefik
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.49.1

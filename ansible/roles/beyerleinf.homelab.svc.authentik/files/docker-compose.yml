@@ -50,15 +50,12 @@ services:
     volumes:
       - ${MEDIA_DIR}:/media
       - ${TEMPLATES_DIR}:/templates
-    # ports:
-    #   - "9000:9000"
-    #   - "9443:9443"
     depends_on:
       - db-pg16
       - redis
     labels:
       traefik.enable: true
-      traefik.http.routers.authentik.rule: "Host(`authentik.lab.beyerleinf.de`) || PathPrefix(`/outpost.goauthentik.io/)"
+      traefik.http.routers.authentik.rule: "Host(`authentik.lab.beyerleinf.de`) || PathPrefix(`/outpost.goauthentik.io/`)"
       traefik.http.routers.authentik.entrypoints: "websecure"
       traefik.http.routers.authentik.tls.certresolver: "hetzner"
       traefik.http.services.authentik.loadbalancer.server.port: "9000"
