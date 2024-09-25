@@ -46,7 +46,7 @@ services:
     networks:
       - grafana
     command:
-      - "-housekeeping_interval=10s"
+      - "-housekeeping_interval=30s"
       - "-docker_only=true"
 
   node-exporter:
