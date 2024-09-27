@@ -50,7 +50,7 @@ services:
 
   radarr:
     container_name: radarr
-    image: binhex/arch-radarr:5.10.4.9218-1-01
+    image: binhex/arch-radarr:5.11.0.9244-1-01
     ports:
       - "7878:7878"
     networks:
