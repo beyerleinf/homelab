@@ -17,7 +17,7 @@ services:
 
   prowlarr:
     container_name: prowlarr
-    image: binhex/arch-prowlarr:1.23.1.4708-1-01
+    image: binhex/arch-prowlarr:1.24.3.4754-1-01
     ports:
       - "9696:9696"
     networks:
