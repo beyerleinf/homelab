@@ -1,6 +1,6 @@
 services:
   reverse-proxy:
-    image: traefik:v3.1
+    image: traefik:v3.2
     container_name: traefik
     environment:
       HETZNER_API_KEY: ${HETZNER_API_KEY}
