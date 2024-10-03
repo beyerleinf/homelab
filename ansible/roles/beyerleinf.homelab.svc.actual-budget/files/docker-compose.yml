@@ -2,7 +2,7 @@ name: actual
 services:
   actual:
     container_name: actual
-    image: ghcr.io/actualbudget/actual-server:24.9.0-alpine
+    image: ghcr.io/actualbudget/actual-server:24.10.0-alpine
     volumes:
       - ${DOCKER_DIR}:/data
     networks:
