@@ -42,25 +42,6 @@ services:
     networks:
       - grafana
 
-  loki:
-    image: grafana/loki:2.9.2
-    command: -config.file=/etc/loki/local-config.yaml
-    networks:
-      - grafana
-
-  promtail:
-    image: grafana/promtail:2.9.2
-    volumes:
-      - ${PROMTAIL_DIR}:/etc/promtail
-      - /var/log:/var/log
-      - /var/lib/docker/containers:/var/lib/docker/containers
-      - /var/run/docker.sock:/var/run/docker.sock
-    command: -config.file=/etc/promtail/promtail.yml
-    networks:
-      - grafana
-    depends_on:
-      - loki
-
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.50.0
     privileged: true

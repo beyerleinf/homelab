@@ -15,8 +15,6 @@ services:
       - ${DOCKER_DIR}/conf/http.yml:/etc/traefik/conf/http.yml
     restart: unless-stopped
     labels:
-      logging: "promtail"
-      logging_jobname: "containerlogs"
       traefik.enable: true
       traefik.http.routers.traefik.entrypoints: "websecure"
       traefik.http.routers.traefik.rule: "Host(`traefik.lab.beyerleinf.de`)"
