@@ -1,0 +1,20 @@
+install:
+  ansible-galaxy install -r requirements.yml
+
+create-role ROLE:
+  ansible-galaxy init {{ROLE}} --init-path=./roles
+
+install-role ROLE:
+  ansible-galaxy install {{ROLE}}
+
+list-roles:
+  ansible-galaxy list
+
+remove-role ROLE:
+  ansible-galaxy remove {{ROLE}}
+
+deploy TARGET CMD="":
+  ansible-playbook site.yml --tags={{TARGET}} {{CMD}}
+
+deploy-all CMD="":
+  ansible-playbook site.yml {{CMD}}
