@@ -57,36 +57,25 @@
           key: {{ tube_archivist_api_key }}
 
 - Tools:
-    - PiHole:
-        icon: "sh-pi-hole"
-        href: http://10.0.0.222:8088
-        siteMonitor: http://10.0.0.222:8088
-        server: arya
-        container: pihole
-        widget:
-          type: pihole
-          url: http://10.0.0.222:8088
-          version: 5
-          key: {{ pihole_api_key }}
-
-    - UniFi:
-        icon: "sh-ubiquiti-unifi"
-        href: "https://unifi.lab.beyerleinf.de"
-        siteMonitor: https://unifi.lab.beyerleinf.de
-        server: arya
-        container: unifi-network-application
-        widget:
-          type: unifi
-          url: https://unifi.lab.beyerleinf.de
-          username: {{ unifi_username }}
-          password: {{ unifi_password }}
-
     - Umami:
         icon: "sh-umami"
         href: https://umami.lab.beyerleinf.de
         siteMonitor: https://umami.lab.beyerleinf.de
         server: arya
         container: umami
+
+- Grafana:
+    - Grafana:
+        icon: "sh-grafana"
+        href: "https://grafana.lab.beyerleinf.de"
+        siteMonitor: "https://grafana.lab.beyerleinf.de"
+        server: arya
+        container: grafana
+        widget:
+            type: grafana
+            url: "https://grafana.lab.beyerleinf.de"
+            username: {{ grafana_username }}
+            password: {{ grafana_password }}
 
 - "Personal Finance":
     - "Firefly III":
@@ -105,3 +94,34 @@
           type: ghostfolio
           url: https://ghostfolio.lab.beyerleinf.de
           key: {{ ghostfolio_token }}
+
+- Network:
+    - UniFi:
+        icon: "sh-ubiquiti-unifi"
+        href: "https://unifi.lab.beyerleinf.de"
+        siteMonitor: https://unifi.lab.beyerleinf.de
+        server: arya
+        container: unifi-network-application
+        widget:
+          type: unifi
+          url: https://unifi.lab.beyerleinf.de
+          username: {{ unifi_username }}
+          password: {{ unifi_password }}
+
+    - PiHole:
+        icon: "sh-pi-hole"
+        href: http://10.0.0.222:8088
+        siteMonitor: http://10.0.0.222:8088
+        server: arya
+        container: pihole
+        widget:
+          type: pihole
+          url: http://10.0.0.222:8088
+          version: 5
+          key: {{ pihole_api_key }}
+
+    - Router:
+        icon: "si-ubiquiti"
+        href: "https://10.0.0.1:4443"
+        siteMonitor: "https://10.0.0.1:4443"
+
