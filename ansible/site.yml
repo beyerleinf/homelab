@@ -93,13 +93,6 @@
   roles:
     - beyerleinf.homelab.svc.unifi
 
-- name: Deploy Maybe
-  hosts: arya
-  tags: maybe
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.maybe
-
 - name: Deploy Actual
   hosts: arya
   tags: actual
