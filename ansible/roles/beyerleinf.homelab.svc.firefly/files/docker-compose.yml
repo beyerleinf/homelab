@@ -23,11 +23,11 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       STATIC_CRON_TOKEN: ${STATIC_CRON_TOKEN}
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.firefly.rule=Host(`firefly.lab.beyerleinf.de`)"
-      - "traefik.http.routers.firefly.entrypoints=websecure"
-      - "traefik.http.routers.firefly.tls.certresolver=hetzner"
-      - "traefik.http.services.firefly.loadbalancer.server.port=8080"
+      traefik.enable: true
+      traefik.http.routers.firefly.rule: "Host(`firefly.lab.beyerleinf.de`)"
+      traefik.http.routers.firefly.entrypoints: "websecure"
+      traefik.http.routers.firefly.tls.certresolver: "hetzner"
+      traefik.http.services.firefly.loadbalancer.server.port: 8080
 
   db:
     image: mariadb:11.5.2

@@ -40,10 +40,11 @@ services:
       - ${EXPORT_DIR}:/usr/src/paperless/export
       - ${CONSUME_DIR}:/usr/src/paperless/consume
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.paperless.rule=Host(`paperless.lab.beyerleinf.de`)"
-      - "traefik.http.routers.paperless.entrypoints=websecure"
-      - "traefik.http.routers.paperless.tls.certresolver=hetzner"
+      traefik.enable: true
+      traefik.http.routers.paperless.rule: "Host(`paperless.lab.beyerleinf.de`)"
+      traefik.http.routers.paperless.entrypoints: "websecure"
+      traefik.http.routers.paperless.tls.certresolver: "hetzner"
+      traefik.http.services.paperless.loadbalancer.server.port: 8000
     environment:
       PAPERLESS_REDIS: redis://broker:6379
       PAPERLESS_DBENGINE: mariadb

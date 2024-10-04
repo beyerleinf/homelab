@@ -4,8 +4,6 @@ services:
     container_name: tubearchivist
     restart: unless-stopped
     image: bbilly1/tubearchivist
-    ports:
-      - 8000:8000
     volumes:
       - ${MEDIA_DIR}:/youtube
       - cache:/cache
@@ -14,7 +12,7 @@ services:
       REDIS_HOST: "archivist-redis"
       HOST_UID: 1000
       HOST_GID: 1000
-      TA_HOST: "10.0.0.222"
+      TA_HOST: "ta.lab.beyerleinf.de"
       TA_USERNAME: ${TA_ROOT_USER}
       TA_PASSWORD: ${TA_ROOT_PASSWORD}
       ELASTIC_PASSWORD: ${ELASTIC_SEARCH_PASSWORD}
@@ -25,9 +23,18 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+    networks:
+      - tubearchivist
+      - traefik
     depends_on:
       - archivist-es
       - archivist-redis
+    labels:
+      traefik.enable: true
+      traefik.http.routers.tube-archivist.rule: "Host(`ta.lab.beyerleinf.de`)"
+      traefik.http.routers.tube-archivist.entrypoints: "websecure"
+      traefik.http.routers.tube-archivist.tls.certresolver: "hetzner"
+      traefik.http.services.tube-archivist.loadbalancer.server.port: 8000
 
   archivist-redis:
     image: redis/redis-stack-server
@@ -36,6 +43,8 @@ services:
       - redis:/data
     depends_on:
       - archivist-es
+    networks:
+      - tubearchivist
 
   archivist-es:
     image: bbilly1/tubearchivist-es # only for amd64, or use official es 8.14.3
@@ -51,9 +60,17 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - es:/usr/share/elasticsearch/data # check for permission error when using bind mount, see readme
+      - es:/usr/share/elasticsearch/data
+    networks:
+      - tubearchivist
 
 volumes:
   cache:
   redis:
   es:
+
+networks:
+  traefik:
+    external: true
+  tubearchivist:
+    name: tubearchivist

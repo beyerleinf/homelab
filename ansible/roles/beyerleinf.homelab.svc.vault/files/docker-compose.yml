@@ -33,10 +33,11 @@ services:
     networks:
       - traefik
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.vault.rule=Host(`vault.lab.beyerleinf.de`)"
-      - "traefik.http.routers.vault.entrypoints=websecure"
-      - "traefik.http.routers.vault.tls.certresolver=hetzner"
+      traefik.enable: true
+      traefik.http.routers.vault.rule: "Host(`vault.lab.beyerleinf.de`)"
+      traefik.http.routers.vault.entrypoints: "websecure"
+      traefik.http.routers.vault.tls.certresolver: "hetzner"
+      traefik.http.services.vault.loadbalancer.server.port: 8200
 
 volumes:
   storage:

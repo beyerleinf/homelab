@@ -1,115 +1,35 @@
 ---
-- name: Common settings
+- name: Deploy
+  hosts: arya
+  become: true
+  roles:
+    - { role: beyerleinf.homelab.common, tags: ["always"] }
+    - { role: beyerleinf.homelab.svc.hetzner-ddns, tags: ["infra"] }
+    - { role: beyerleinf.homelab.svc.authentik, tags: ["infra"] }
+    - { role: beyerleinf.homelab.svc.traefik, tags: ["infra"] }
+    - { role: beyerleinf.homelab.svc.portainer, tags: ["infra"] }
+    - { role: beyerleinf.homelab.svc.homepage, tags: ["homepage"] }
+    - { role: beyerleinf.homelab.svc.paperless-ngx, tags: ["paperless"] }
+    - { role: beyerleinf.homelab.svc.umami, tags: ["umami"] }
+    - { role: beyerleinf.homelab.svc.jellyfin, tags: ["jellyfin"] }
+    - { role: beyerleinf.homelab.svc.seafile, tags: ["seafile"] }
+    - { role: beyerleinf.homelab.svc.immich, tags: ["immich"] }
+    - { role: beyerleinf.homelab.svc.vault, tags: ["vault"] }
+    - { role: beyerleinf.homelab.svc.deluge, tags: ["deluge"] }
+    - { role: beyerleinf.homelab.svc.servarr, tags: ["servarr"] }
+    - { role: beyerleinf.homelab.svc.pihole, tags: ["pihole"] }
+    - { role: beyerleinf.homelab.svc.unifi, tags: ["unifi"] }
+    - { role: beyerleinf.homelab.svc.firefly, tags: ["firefly"] }
+    - { role: beyerleinf.homelab.svc.tube-archivist, tags: ["tubearchivist"] }
+    - { role: beyerleinf.homelab.svc.grafana, tags: ["grafana"] }
+
+- name: After All tasks
   hosts: arya
   tags: always
   become: true
-  roles:
-    - beyerleinf.homelab.common
-
-- name: Deploy Infrastructure
-  hosts: arya
-  tags: infrastructure
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.hetzner-ddns
-    - beyerleinf.homelab.svc.authentik
-    - beyerleinf.homelab.svc.traefik
-    - beyerleinf.homelab.svc.portainer
-
-- name: Deploy Homepage
-  hosts: arya
-  tags: homepage
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.homepage
-
-- name: Deploy Paperless-ngx
-  hosts: arya
-  tags: paperless
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.paperless-ngx
-
-- name: Deploy Umami
-  hosts: arya
-  tags: umami
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.umami
-
-- name: Deploy Jellyfin
-  hosts: arya
-  tags: jellyfin
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.jellyfin
-
-- name: Deploy Seafile
-  hosts: arya
-  tags: seafile
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.seafile
-
-- name: Deploy Immich
-  hosts: arya
-  tags: immich
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.immich
-
-- name: Deploy Vault
-  hosts: arya
-  tags: vault
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.vault
-
-- name: Deploy Deluge
-  hosts: arya
-  tags: deluge
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.deluge
-
-- name: Deploy Servarr
-  hosts: arya
-  tags: servarr
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.servarr
-
-- name: Deploy PiHole
-  hosts: arya
-  tags: pihole
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.pihole
-
-- name: Deploy UniFi
-  hosts: arya
-  tags: unifi
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.unifi
-
-- name: Deploy Firefly III
-  hosts: arya
-  tags: firefly
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.firefly
-
-- name: Deploy TubeArchivist
-  hosts: arya
-  tags: tubearchivist
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.tube-archivist
-
-- name: Deploy Grafana
-  hosts: arya
-  tags: grafana
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.grafana
+  tasks:
+    - name: Prune dangling images
+      community.docker.docker_prune:
+        images: true
+        images_filters:
+          dangling: true

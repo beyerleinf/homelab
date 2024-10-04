@@ -22,10 +22,11 @@ services:
       timeout: 5s
       retries: 5
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.umami.rule=Host(`umami.lab.beyerleinf.de`)"
-      - "traefik.http.routers.umami.entrypoints=websecure"
-      - "traefik.http.routers.umami.tls.certresolver=hetzner"
+      traefik.enable: true
+      traefik.http.routers.umami.rule: "Host(`umami.lab.beyerleinf.de`)"
+      traefik.http.routers.umami.entrypoints: "websecure"
+      traefik.http.routers.umami.tls.certresolver: "hetzner"
+      traefik.http.services.umami.loadbalancer.server.port: 3000
 
   db-pg16:
     image: postgres:16.4-alpine

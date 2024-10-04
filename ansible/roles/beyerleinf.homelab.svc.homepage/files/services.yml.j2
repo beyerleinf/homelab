@@ -1,13 +1,13 @@
 - Storage:
     - Seafile:
-        icon: seafile.png
+        icon: "sh-seafile"
         href: https://files.lab.beyerleinf.de
         siteMonitor: https://files.lab.beyerleinf.de
         server: arya
         container: seafile
 
     - Paperless:
-        icon: paperless-ngx.png
+        icon: "sh-paperless-ngx"
         href: https://paperless.lab.beyerleinf.de
         siteMonitor: https://paperless.lab.beyerleinf.de
         server: arya
@@ -18,7 +18,7 @@
           key: {{ paperless_api_key }}
 
     - Immich:
-        icon: immich.png
+        icon: "sh-immich"
         href: https://pics.lab.beyerleinf.de
         siteMonitor: https://pics.lab.beyerleinf.de
         server: arya
@@ -30,7 +30,7 @@
 
 - Media:
     - Jellyfin:
-        icon: jellyfin.png
+        icon: "sh-jellyfin"
         href: https://media.lab.beyerleinf.de
         siteMonitor: https://media.lab.beyerleinf.de/health
         server: arya
@@ -44,22 +44,33 @@
           enableUser: true
           showEpisodeNumber: true
           expandOneStreamToTwoRows: false
+    
+    - "Tube Archivist":
+        icon: "sh-tube-archivist"
+        href: "https://ta.lab.beyerleinf.de"
+        siteMonitor: "https://ta.lab.beyerleinf.de"
+        server: arya
+        container: "tubearchivist"
+        widget:
+          type: "tubearchivist"
+          url: "https://ta.lab.beyerleinf.de"
+          key: {{ tube_archivist_api_key }}
 
 - Tools:
     - PiHole:
-        icon: pi-hole.png
+        icon: "sh-pi-hole"
         href: http://10.0.0.222:8088
-        siteMonitor: http://pihole
+        siteMonitor: http://10.0.0.222:8088
         server: arya
         container: pihole
         widget:
           type: pihole
-          url: http://pihole
+          url: http://10.0.0.222:8088
           version: 5
           key: {{ pihole_api_key }}
 
     - UniFi:
-        icon: unifi.png
+        icon: "sh-ubiquiti-unifi"
         href: "https://unifi.lab.beyerleinf.de"
         siteMonitor: https://unifi.lab.beyerleinf.de
         server: arya
@@ -71,14 +82,14 @@
           password: {{ unifi_password }}
 
     - "Firefly III":
-        icon: firefly.png
+        icon: "sh-firefly-iii"
         href: https://firefly.lab.beyerleinf.de
         siteMonitor: https://firefly.lab.beyerleinf.de
         server: arya
         container: firefly
 
     - Umami:
-        icon: umami-light.png
+        icon: "sh-umami"
         href: https://umami.lab.beyerleinf.de
         siteMonitor: https://umami.lab.beyerleinf.de
         server: arya

@@ -1,2 +1,6 @@
 ---
 # tasks file for beyerleinf.homelab.common
+
+- name: Install requests python package
+  ansible.builtin.pip:
+    name: requests

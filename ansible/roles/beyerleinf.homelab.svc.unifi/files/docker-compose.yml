@@ -33,15 +33,15 @@ services:
       timeout: 10s
       retries: 5
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.unifi.rule=Host(`unifi.lab.beyerleinf.de`)"
-      - "traefik.http.routers.unifi.entrypoints=websecure"
-      - "traefik.http.routers.unifi.tls.certresolver=hetzner"
-      - "traefik.http.routers.unifi.middlewares=unifi"
-      - "traefik.http.services.unifi.loadbalancer.server.port=8443"
-      - "traefik.http.services.unifi.loadbalancer.server.scheme=https"
-      - "traefik.http.middlewares.unifi.headers.customrequestheaders.X-Forwarded-Proto=https"
-      - "traefik.http.middlewares.unifi.headers.customrequestheaders.Authorization="
+      traefik.enable: true
+      traefik.http.routers.unifi.rule: "Host(`unifi.lab.beyerleinf.de`)"
+      traefik.http.routers.unifi.entrypoints: "websecure"
+      traefik.http.routers.unifi.tls.certresolver: "hetzner"
+      traefik.http.routers.unifi.middlewares: "unifi"
+      traefik.http.services.unifi.loadbalancer.server.port: 8443
+      traefik.http.services.unifi.loadbalancer.server.scheme: "https"
+      traefik.http.middlewares.unifi.headers.customrequestheaders.X-Forwarded-Proto: "https"
+      traefik.http.middlewares.unifi.headers.customrequestheaders.Authorization: ""
 
   mongodb:
     image: mongo:7.0.14

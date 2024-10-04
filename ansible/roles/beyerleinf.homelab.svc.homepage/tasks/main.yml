@@ -73,6 +73,7 @@
   ansible.builtin.assert:
     that:
       - "output.containers[0].State == 'running'"
+      - "output.containers[1].State == 'running'"
 
 - name: Remove temp directory
   ansible.builtin.file:

@@ -19,10 +19,11 @@ services:
       - database
     restart: always
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.immich.rule=Host(`pics.lab.beyerleinf.de`)"
-      - "traefik.http.routers.immich.entrypoints=websecure"
-      - "traefik.http.routers.immich.tls.certresolver=hetzner"
+      traefik.enable: true
+      traefik.http.routers.immich.rule: "Host(`pics.lab.beyerleinf.de`)"
+      traefik.http.routers.immich.entrypoints: "websecure"
+      traefik.http.routers.immich.tls.certresolver: "hetzner"
+      traefik.http.services.immich.loadbalancer.server.port: 3001
 
   immich-machine-learning:
     # For hardware acceleration, add one of -[armnn, cuda, openvino] to the image tag.
