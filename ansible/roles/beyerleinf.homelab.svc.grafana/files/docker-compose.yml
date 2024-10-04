@@ -51,7 +51,7 @@ services:
       - grafana
 
   promtail:
-    image: grafana/promtail:2.9.2
+    image: grafana/promtail:2.9.10
     volumes:
       - ${PROMTAIL_DIR}:/etc/promtail
       - /var/log:/var/log
