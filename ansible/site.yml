@@ -93,13 +93,6 @@
   roles:
     - beyerleinf.homelab.svc.unifi
 
-- name: Deploy Actual
-  hosts: arya
-  tags: actual
-  become: true
-  roles:
-    - beyerleinf.homelab.svc.actual-budget
-
 - name: Deploy Firefly III
   hosts: arya
   tags: firefly
