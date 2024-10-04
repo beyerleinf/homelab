@@ -2,17 +2,25 @@ name: grafana
 services:
   grafana:
     image: grafana/grafana:11.2.2
+    container_name: grafana
     depends_on:
       - prometheus
-    ports:
-      - "3033:3000"
     volumes:
       - ${GRAFANA_DATA_DIR}:/var/lib/grafana
       - ${GRAFANA_DIR}/provisioning:/etc/grafana/provisioning/
     environment:
       GF_USERS_ALLOW_SIGN_UP: false
+      GF_SERVER_DOMAIN: "grafana.lab.beyerleinf.de"
+      GF_SERVER_ROOT_URL: "https://grafana.lab.beyerleinf.de"
     networks:
       - grafana
+      - traefik
+    labels:
+      traefik.enable: true
+      traefik.http.routers.grafana.rule: "Host(`grafana.lab.beyerleinf.de`)"
+      traefik.http.routers.grafana.entrypoints: "websecure"
+      traefik.http.routers.grafana.tls.certresolver: "hetzner"
+      traefik.http.services.grafana.loadbalancer.server.port: 3000
 
   prometheus:
     image: prom/prometheus:v2.54.1
@@ -33,7 +41,6 @@ services:
       - node-exporter
     networks:
       - grafana
-      - traefik
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.50.0
