@@ -1,6 +1,2 @@
 ---
 # tasks file for beyerleinf.homelab.common
-
-# - name: Create internal docker network
-#   community.docker.docker_network:
-#     name: internal

@@ -6,7 +6,6 @@ services:
     ports:
       - "8191:8191"
     networks:
-      - internal
       - deluge
     volumes:
       - ${FLARESOLVERR_DIR}:/config
@@ -21,7 +20,6 @@ services:
     ports:
       - "9696:9696"
     networks:
-      - internal
       - deluge
     volumes:
       - ${PROWLARR_DIR}:/config
@@ -37,7 +35,6 @@ services:
       - "8989:8989"
       - "9897:9897"
     networks:
-      - internal
       - deluge
     volumes:
       - ${TVSHOWS_DIR}:/media
@@ -54,7 +51,6 @@ services:
     ports:
       - "7878:7878"
     networks:
-      - internal
       - deluge
     volumes:
       - ${MOVIES_DIR}:/media
@@ -71,7 +67,6 @@ services:
     ports:
       - "8686:8686"
     networks:
-      - internal
       - deluge
     volumes:
       - ${MUSIC_DIR}:/media
@@ -84,6 +79,4 @@ services:
 
 networks:
   deluge:
-    external: true
-  internal:
     external: true

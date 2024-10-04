@@ -10,7 +10,6 @@ services:
       - "9118:9118"
       - "58846:58846"
     networks:
-      - internal
       - deluge
     volumes:
       - ${CONFIG_DIR}:/config
@@ -33,5 +32,3 @@ services:
 networks:
   deluge:
     name: deluge
-  internal:
-    external: true
