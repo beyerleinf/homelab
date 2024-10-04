@@ -54,6 +54,8 @@ services:
       - db-pg16
       - redis
     labels:
+      logging: "promtail"
+      logging_jobname: "containerlogs"
       traefik.enable: true
       traefik.http.routers.authentik.rule: "Host(`authentik.lab.beyerleinf.de`)"
       traefik.http.routers.authentik.service: "authentik"

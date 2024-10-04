@@ -85,6 +85,21 @@
     recurse: true
   when: not prometheus_dir_check.stat.exists
 
+- name: Check promtail directory
+  ansible.builtin.stat:
+    path: "{{ promtail_dir }}"
+  register: promtail_dir_check
+
+- name: Ensure promtail directory exists
+  ansible.builtin.file:
+    path: "{{ promtail_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "777"
+    recurse: true
+  when: not promtail_dir_check.stat.exists
+
 - name: Copy Docker env file
   ansible.builtin.template:
     src: files/.docker-env.j2
@@ -107,6 +122,12 @@
   ansible.builtin.copy:
     src: files/prometheus/
     dest: "{{ prometheus_dir }}/"
+    mode: "666"
+
+- name: Copy Promtail config
+  ansible.builtin.copy:
+    src: files/promtail/
+    dest: "{{ promtail_dir }}/"
     mode: "666"
 
 - name: Stop Grafana

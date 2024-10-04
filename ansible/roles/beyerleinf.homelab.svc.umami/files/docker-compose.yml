@@ -3,8 +3,6 @@ services:
   umami:
     image: ghcr.io/umami-software/umami:postgresql-v2.12.1
     container_name: umami
-    ports:
-      - 3331:3000
     environment:
       DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@db-pg16:5432/umami
       DATABASE_TYPE: postgresql
