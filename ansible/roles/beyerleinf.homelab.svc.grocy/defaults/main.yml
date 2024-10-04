@@ -1,0 +1,5 @@
+---
+# defaults file for beyerleinf.homelab.svc.grocy
+
+tmp_dir: "/tmp/grocy"
+grocy_dir: "{{ docker_base_path }}/grocy"

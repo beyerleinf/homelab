@@ -63,8 +63,6 @@
         siteMonitor: https://umami.lab.beyerleinf.de
         server: arya
         container: umami
-
-- Grafana:
     - Grafana:
         icon: "sh-grafana"
         href: "https://grafana.lab.beyerleinf.de"
@@ -77,7 +75,7 @@
             username: {{ grafana_username }}
             password: {{ grafana_password }}
 
-- "Personal Finance":
+- "Personal Management":
     - "Firefly III":
         icon: "sh-firefly-iii"
         href: https://firefly.lab.beyerleinf.de
@@ -94,6 +92,12 @@
           type: ghostfolio
           url: https://ghostfolio.lab.beyerleinf.de
           key: {{ ghostfolio_token }}
+    - Grocy:
+        icon: "sh-grocy"
+        href: https://grocy.lab.beyerleinf.de
+        siteMonitor: https://grocy.lab.beyerleinf.de
+        server: arya
+        container: grocy
 
 - Network:
     - UniFi:

@@ -23,6 +23,7 @@
     - { role: beyerleinf.homelab.svc.tube-archivist, tags: ["tubearchivist"] }
     - { role: beyerleinf.homelab.svc.grafana, tags: ["grafana"] }
     - { role: beyerleinf.homelab.svc.ghostfolio, tags: ["ghostfolio"] }
+    - { role: beyerleinf.homelab.svc.grocy, tags: ["grocy"] }
 
 - name: After All tasks
   hosts: arya
