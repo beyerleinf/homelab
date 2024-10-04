@@ -55,9 +55,14 @@ services:
       - redis
     labels:
       traefik.enable: true
-      traefik.http.routers.authentik.rule: "Host(`authentik.lab.beyerleinf.de`) || PathPrefix(`/outpost.goauthentik.io/`)"
+      traefik.http.routers.authentik.rule: "Host(`authentik.lab.beyerleinf.de`)"
+      traefik.http.routers.authentik.service: "authentik"
       traefik.http.routers.authentik.entrypoints: "websecure"
       traefik.http.routers.authentik.tls.certresolver: "hetzner"
+      traefik.http.routers.authentik-outpost.rule: "PathPrefix(`/outpost.goauthentik.io/`)"
+      traefik.http.routers.authentik-outpost.service: "authentik"
+      traefik.http.routers.authentik-outpost.entrypoints: "websecure"
+      traefik.http.routers.authentik-outpost.tls.certresolver: "hetzner"
       traefik.http.services.authentik.loadbalancer.server.port: "9000"
 
   authentik-worker:

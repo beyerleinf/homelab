@@ -81,16 +81,27 @@
           username: {{ unifi_username }}
           password: {{ unifi_password }}
 
-    - "Firefly III":
-        icon: "sh-firefly-iii"
-        href: https://firefly.lab.beyerleinf.de
-        siteMonitor: https://firefly.lab.beyerleinf.de
-        server: arya
-        container: firefly
-
     - Umami:
         icon: "sh-umami"
         href: https://umami.lab.beyerleinf.de
         siteMonitor: https://umami.lab.beyerleinf.de
         server: arya
         container: umami
+
+- "Personal Finance":
+    - "Firefly III":
+        icon: "sh-firefly-iii"
+        href: https://firefly.lab.beyerleinf.de
+        siteMonitor: https://firefly.lab.beyerleinf.de
+        server: arya
+        container: firefly
+    - Ghostfolio:
+        icon: "sh-ghostfolio"
+        href: https://ghostfolio.lab.beyerleinf.de
+        siteMonitor: https://ghostfolio.lab.beyerleinf.de
+        server: arya
+        container: ghostfolio
+        widget:
+          type: ghostfolio
+          url: https://ghostfolio.lab.beyerleinf.de
+          key: {{ ghostfolio_token }}
