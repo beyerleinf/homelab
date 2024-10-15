@@ -1,7 +1,7 @@
 name: paperless-ngx
 services:
   broker:
-    image: redis:7.4.0-alpine
+    image: redis:7.4.0-alpine3.20
     restart: always
     networks:
       - paperless
