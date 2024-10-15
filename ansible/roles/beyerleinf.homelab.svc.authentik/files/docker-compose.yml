@@ -19,7 +19,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
   redis:
-    image: redis:7.4.0-alpine3.20
+    image: redis:7.4.1-alpine3.20
     command: --save 60 1 --loglevel warning
     restart: always
     healthcheck:
