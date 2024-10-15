@@ -2,6 +2,7 @@ name: delugevpn
 services:
   deluge:
     container_name: delugevpn
+    restart: always
     image: binhex/arch-delugevpn:2.1.1-6-05
     privileged: true
     ports:

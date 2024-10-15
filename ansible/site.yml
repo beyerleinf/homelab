@@ -24,6 +24,7 @@
     - { role: beyerleinf.homelab.svc.grafana, tags: ["grafana"] }
     - { role: beyerleinf.homelab.svc.ghostfolio, tags: ["ghostfolio"] }
     - { role: beyerleinf.homelab.svc.grocy, tags: ["grocy"] }
+    - { role: beyerleinf.homelab.svc.homeassistant, tags: ["hass"] }
 
 - name: After All tasks
   hosts: arya

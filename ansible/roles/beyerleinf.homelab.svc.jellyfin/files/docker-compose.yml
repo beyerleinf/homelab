@@ -23,7 +23,7 @@ services:
       - ${TVSHOWS_DIR}:/data/tvshows
       - ${MUSIC_DIR}:/data/music
       - ${YOUTUBE_DIR}:/data/youtube
-    restart: "unless-stopped"
+    restart: always
     environment:
       JELLYFIN_PublishedServerUrl: ${DISCOVERY_IP}
       NVIDIA_VISIBLE_DEVICES: all

@@ -10,7 +10,7 @@ services:
       API_TOKEN: ${HETZNER_API_KEY}
       RECORD_TYPE: A
       CRON_EXPRESSION: "0 */2 * * *"
-    restart: unless-stopped
+    restart: always
 
 networks:
   hetzner-ddns:

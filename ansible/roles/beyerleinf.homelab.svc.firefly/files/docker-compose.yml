@@ -2,12 +2,15 @@ name: firefly
 services:
   firefly:
     container_name: firefly
+    restart: always
     image: fireflyiii/core:version-6.1.19
     networks:
       - traefik
       - firefly
     volumes:
       - upload:/var/www/html/storage/upload
+    depends_on:
+      - db
     environment:
       APP_ENV: "production"
       APP_KEY: ${APP_KEY}
@@ -31,6 +34,7 @@ services:
 
   db:
     image: mariadb:11.5.2
+    restart: always
     networks:
       - firefly
     volumes:
@@ -44,6 +48,7 @@ services:
   importer:
     image: fireflyiii/data-importer:version-1.5.5
     hostname: importer
+    restart: always
     networks:
       - firefly
     depends_on:
@@ -63,7 +68,7 @@ services:
 
   cron:
     image: alpine:3.20.3
-    restart: "always"
+    restart: always
     command: sh -c "echo \"0 3 * * * wget -qO- http://firefly:8080/api/v1/cron/${STATIC_CRON_TOKEN}\" | crontab - && crond -f -L /dev/stdout"
     networks:
       - firefly

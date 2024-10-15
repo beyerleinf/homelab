@@ -13,7 +13,7 @@ services:
       - acme:/acme
       - ${DOCKER_DIR}/traefik.yml:/etc/traefik/traefik.yml
       - ${DOCKER_DIR}/conf/http.yml:/etc/traefik/conf/http.yml
-    restart: unless-stopped
+    restart: always
     labels:
       traefik.enable: true
       traefik.http.routers.traefik.entrypoints: "websecure"

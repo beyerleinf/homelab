@@ -2,6 +2,7 @@ name: unifi
 services:
   unifi-network-application:
     image: lscr.io/linuxserver/unifi-network-application:latest
+    restart: always
     container_name: unifi-network-application
     depends_on:
       - mongodb
@@ -45,6 +46,7 @@ services:
 
   mongodb:
     image: mongo:7.0.14
+    restart: always
     networks:
       - unifi
     ports:

@@ -3,6 +3,7 @@ services:
   ghostfolio:
     image: ghostfolio/ghostfolio:2.113.0
     container_name: ghostfolio
+    restart: always
     init: true
     cap_drop:
       - ALL
@@ -40,6 +41,7 @@ services:
 
   postgres:
     image: postgres:15.8-alpine3.20
+    restart: always
     cap_drop:
       - ALL
     cap_add:
@@ -66,6 +68,7 @@ services:
 
   redis:
     image: redis:7.4.0-alpine3.20
+    restart: always
     user: "999:1000"
     cap_drop:
       - ALL

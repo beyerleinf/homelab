@@ -2,7 +2,7 @@ name: tube-archivist
 services:
   tubearchivist:
     container_name: tubearchivist
-    restart: unless-stopped
+    restart: always
     image: bbilly1/tubearchivist
     volumes:
       - ${MEDIA_DIR}:/youtube
@@ -38,7 +38,7 @@ services:
 
   archivist-redis:
     image: redis/redis-stack-server
-    restart: unless-stopped
+    restart: always
     volumes:
       - redis:/data
     depends_on:
@@ -48,7 +48,7 @@ services:
 
   archivist-es:
     image: bbilly1/tubearchivist-es # only for amd64, or use official es 8.14.3
-    restart: unless-stopped
+    restart: always
     environment:
       ELASTIC_PASSWORD: ${ELASTIC_SEARCH_PASSWORD}
       ES_JAVA_OPTS: "-Xms1g -Xmx1g"

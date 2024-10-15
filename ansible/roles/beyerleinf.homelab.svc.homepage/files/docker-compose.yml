@@ -2,6 +2,8 @@ services:
   homepage:
     image: ghcr.io/gethomepage/homepage:v0.9.10
     container_name: homepage
+    dns:
+      - 1.1.1.1
     networks:
       - traefik
       - homepage
@@ -14,10 +16,13 @@ services:
       traefik.http.routers.homepage.tls.certresolver: "hetzner"
       traefik.http.routers.homepage.middlewares: "authentik@file"
       traefik.http.services.homepage.loadbalancer.server.port: 3000
+    depends_on:
+      - dockerproxy
+    restart: always
 
   dockerproxy:
     image: ghcr.io/tecnativa/docker-socket-proxy:0.3.0
-    restart: unless-stopped
+    restart: always
     environment:
       CONTAINERS: 1 # Allow access to viewing containers
       SERVICES: 1 # Allow access to viewing services (necessary when using Docker Swarm)

@@ -74,6 +74,24 @@
             url: "https://grafana.lab.beyerleinf.de"
             username: {{ grafana_username }}
             password: {{ grafana_password }}
+    - "Home Assistant":
+        icon: "sh-home-assistant"
+        href: "https://hass.lab.beyerleinf.de"
+        siteMonitor: "https://hass.lab.beyerleinf.de"
+        server: arya
+        container: homeassistant
+        widget:
+          type: homeassistant
+          url: "https://hass.lab.beyerleinf.de"
+          key: {{ homeassistant_token }}
+          custom:
+            - template: "{% raw %}{{ states.light|selectattr('state','equalto','on')|list|length }}{% endraw %}"
+              label: lights on
+            - template: "{% raw %}{{ states.switch|selectattr('state','equalto','on')|list|length }}{% endraw %}"
+              label: switches on
+            - state: "weather.home"
+              label: "Weather"
+              value: "{% raw %}{attributes.temperature} {attributes.temperature_unit} | {attributes.wind_speed} {attributes.wind_speed_unit}{% endraw %}"
 
 - "Personal Management":
     - "Firefly III":

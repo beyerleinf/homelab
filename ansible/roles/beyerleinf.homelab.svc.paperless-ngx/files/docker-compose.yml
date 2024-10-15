@@ -2,7 +2,7 @@ name: paperless-ngx
 services:
   broker:
     image: redis:7.4.0-alpine
-    restart: unless-stopped
+    restart: always
     networks:
       - paperless
     volumes:
@@ -10,7 +10,7 @@ services:
 
   db:
     image: mariadb:11.5.2
-    restart: unless-stopped
+    restart: always
     networks:
       - paperless
     volumes:
@@ -25,7 +25,7 @@ services:
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:2.12.1
     container_name: paperless-ngx-webserver
-    restart: unless-stopped
+    restart: always
     networks:
       - traefik
       - paperless
@@ -63,7 +63,7 @@ services:
 
   gotenberg:
     image: gotenberg/gotenberg:8.11.1
-    restart: unless-stopped
+    restart: always
     networks:
       - paperless
     # The gotenberg chromium route is used to convert .eml files. We do not
@@ -75,7 +75,7 @@ services:
 
   tika:
     image: apache/tika:2.9.2.1
-    restart: unless-stopped
+    restart: always
     networks:
       - paperless
 

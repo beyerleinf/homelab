@@ -2,6 +2,7 @@ name: servarr
 services:
   flaresolverr:
     container_name: flaresolverr
+    restart: always
     image: binhex/arch-flaresolverr:3.3.21-1-02
     ports:
       - "8191:8191"
@@ -16,6 +17,7 @@ services:
 
   prowlarr:
     container_name: prowlarr
+    restart: always
     image: binhex/arch-prowlarr:1.24.3.4754-1-01
     ports:
       - "9696:9696"
@@ -30,6 +32,7 @@ services:
 
   sonarr:
     container_name: sonarr
+    restart: always
     image: binhex/arch-sonarr:4.0.9.2244-1-01
     ports:
       - "8989:8989"
@@ -47,6 +50,7 @@ services:
 
   radarr:
     container_name: radarr
+    restart: always
     image: binhex/arch-radarr:5.11.0.9244-1-01
     ports:
       - "7878:7878"
@@ -63,6 +67,7 @@ services:
 
   lidarr:
     container_name: lidarr
+    restart: always
     image: binhex/arch-lidarr:2.5.3.4341-1-02
     ports:
       - "8686:8686"
