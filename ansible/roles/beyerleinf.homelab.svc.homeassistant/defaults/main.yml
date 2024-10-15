@@ -1,0 +1,6 @@
+---
+# defaults file for beyerleinf.homelab.svc.homeassistant
+
+tmp_dir: "/tmp/homeassistant"
+hass_docker_dir: "{{ docker_base_path }}/homeassistant"
+mqtt_docker_dir: "{{ docker_base_path }}/mosquitto"

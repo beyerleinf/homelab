@@ -1,0 +1,40 @@
+name: "homeassistant"
+services:
+  homeassistant:
+    container_name: "homeassistant"
+    privileged: true
+    image: ghcr.io/home-assistant/home-assistant:2024.10
+    volumes:
+      - /run/dbus:/run/dbus:ro
+      - /etc/localtime:/etc/localtime:ro
+      - ${HASS_DOCKER_DIR}:/config
+    networks:
+      - traefik
+      - homeassistant
+    depends_on:
+      - mqtt
+    restart: always
+    dns:
+      - 1.1.1.1
+    labels:
+      traefik.enable: true
+      traefik.http.routers.homeassistant.rule: "Host(`hass.lab.beyerleinf.de`)"
+      traefik.http.routers.homeassistant.entrypoints: "websecure"
+      traefik.http.routers.homeassistant.tls.certresolver: "hetzner"
+      traefik.http.services.homeassistant.loadbalancer.server.port: 8123
+
+  mqtt:
+    image: eclipse-mosquitto:2.0.19
+    ports:
+      - "1883:1883"
+    volumes:
+      - ${MQTT_DOCKER_DIR}:/mosquitto
+    networks:
+      - homeassistant
+    restart: always
+
+networks:
+  homeassistant:
+    name: homeassistant
+  traefik:
+    external: true

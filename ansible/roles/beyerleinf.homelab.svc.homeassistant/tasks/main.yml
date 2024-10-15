@@ -1,0 +1,118 @@
+---
+# tasks file for beyerleinf.homelab.svc.homeassistant
+
+- name: Create temp directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "666"
+    recurse: true
+
+- name: Check Home Assistant docker directory
+  ansible.builtin.stat:
+    path: "{{ hass_docker_dir }}"
+  register: hass_docker_dir_check
+
+- name: Ensure Home Assistant docker directory exists
+  ansible.builtin.file:
+    path: "{{ hass_docker_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "777"
+    recurse: true
+  when: not hass_docker_dir_check.stat.exists
+
+- name: Check Mosquitto docker directory
+  ansible.builtin.stat:
+    path: "{{ mqtt_docker_dir }}"
+  register: mqtt_docker_dir_check
+
+- name: Ensure Mosquitto docker directory exists
+  ansible.builtin.file:
+    path: "{{ mqtt_docker_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "777"
+    recurse: true
+  when: not mqtt_docker_dir_check.stat.exists
+
+- name: Check Mosquitto config directory
+  ansible.builtin.stat:
+    path: "{{ mqtt_docker_dir }}/config"
+  register: mqtt_config_dir_check
+
+- name: Ensure Mosquitto config directory exists
+  ansible.builtin.file:
+    path: "{{ mqtt_docker_dir }}/config"
+    state: directory
+    owner: root
+    group: root
+    mode: "777"
+    recurse: true
+  when: not mqtt_config_dir_check.stat.exists
+
+- name: Copy Home Assistant waste_schedule.yml file
+  ansible.builtin.template:
+    src: files/homeassistant/waste_schedule.yml
+    dest: "{{ hass_docker_dir }}/waste_schedule.yaml"
+    mode: "666"
+
+- name: Copy Home Assistant configuration.yml file
+  ansible.builtin.template:
+    src: files/homeassistant/configuration.yml
+    dest: "{{ hass_docker_dir }}/configuration.yaml"
+    mode: "666"
+
+- name: Copy Home Assistant secrets.yml file
+  ansible.builtin.template:
+    src: files/homeassistant/secrets.yml
+    dest: "{{ hass_docker_dir }}/secrets.yaml"
+    mode: "666"
+
+- name: Copy Mosquitto config file
+  ansible.builtin.template:
+    src: files/mqtt/mosquitto.conf
+    dest: "{{ mqtt_docker_dir }}/config/mosquitto.conf"
+    mode: "666"
+
+- name: Copy Docker env file
+  ansible.builtin.template:
+    src: files/.docker-env.j2
+    dest: "{{ tmp_dir }}/.env"
+    mode: "666"
+
+- name: Copy Docker Compose file
+  ansible.builtin.copy:
+    src: files/docker-compose.yml
+    dest: "{{ tmp_dir }}/docker-compose.yml"
+    mode: "666"
+
+- name: Stop Home Assistant
+  community.docker.docker_compose_v2:
+    project_src: "{{ tmp_dir }}"
+    files:
+      - docker-compose.yml
+    state: absent
+    remove_orphans: true
+
+- name: Deploy Home Assistant
+  community.docker.docker_compose_v2:
+    project_src: "{{ tmp_dir }}"
+    files:
+      - docker-compose.yml
+  register: output
+
+- name: Verify that Home Assistant is running
+  ansible.builtin.assert:
+    that:
+      - "output.containers[0].State == 'running'"
+      - "output.containers[0].State == 'running'"
+
+- name: Remove temp directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: absent
