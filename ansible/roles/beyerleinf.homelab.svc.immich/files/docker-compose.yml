@@ -1,8 +1,7 @@
 name: immich
 services:
-  immich-server:
+  server:
     image: ghcr.io/immich-app/immich-server:v1.118.0
-    container_name: immich-server
     extends:
       file: hwaccel.transcoding.yml
       service: nvenc # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
@@ -23,9 +22,9 @@ services:
       traefik.http.routers.immich.rule: "Host(`pics.lab.beyerleinf.de`)"
       traefik.http.routers.immich.entrypoints: "websecure"
       traefik.http.routers.immich.tls.certresolver: "hetzner"
-      traefik.http.services.immich.loadbalancer.server.port: 3001
+      traefik.http.services.immich.loadbalancer.server.port: 2283
 
-  immich-machine-learning:
+  ml:
     # For hardware acceleration, add one of -[armnn, cuda, openvino] to the image tag.
     image: ghcr.io/immich-app/immich-machine-learning:v1.118.0-cuda
     networks:

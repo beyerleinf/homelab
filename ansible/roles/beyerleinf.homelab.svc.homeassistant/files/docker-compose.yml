@@ -7,6 +7,7 @@ services:
     volumes:
       - /run/dbus:/run/dbus:ro
       - /etc/localtime:/etc/localtime:ro
+      - /dev/ttyACM0:/dev/ttyACM0
       - ${HASS_DOCKER_DIR}:/config
     networks:
       - traefik
@@ -14,8 +15,6 @@ services:
     depends_on:
       - mqtt
     restart: always
-    dns:
-      - 1.1.1.1
     labels:
       traefik.enable: true
       traefik.http.routers.homeassistant.rule: "Host(`hass.lab.beyerleinf.de`)"
