@@ -18,3 +18,6 @@ deploy TARGET CMD="":
 
 deploy-all CMD="":
   ansible-playbook site.yml {{CMD}}
+
+encrypt-secret NAME VALUE:
+  ansible-vault encrypt_string "{{VALUE}}" --name "{{NAME}}"
