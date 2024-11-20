@@ -1,7 +1,7 @@
 name: immich
 services:
   server:
-    image: ghcr.io/immich-app/immich-server:v1.118.0
+    image: ghcr.io/immich-app/immich-server:v1.121.0
     extends:
       file: hwaccel.transcoding.yml
       service: nvenc # set to one of [nvenc, quicksync, rkmpp, vaapi, vaapi-wsl] for accelerated transcoding
