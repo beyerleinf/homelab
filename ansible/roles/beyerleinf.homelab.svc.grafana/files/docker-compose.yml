@@ -24,7 +24,7 @@ services:
       traefik.http.services.grafana.loadbalancer.server.port: 3000
 
   prometheus:
-    image: prom/prometheus:v2.54.1
+    image: prom/prometheus:v2.55.1
     restart: always
     volumes:
       - ${PROMETHEUS_DATA_DIR}:/prometheus
