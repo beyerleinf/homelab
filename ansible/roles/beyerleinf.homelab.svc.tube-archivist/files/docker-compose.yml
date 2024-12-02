@@ -3,7 +3,7 @@ services:
   tubearchivist:
     container_name: tubearchivist
     restart: always
-    image: bbilly1/tubearchivist
+    image: bbilly1/tubearchivist:v0.4.11
     volumes:
       - ${MEDIA_DIR}:/youtube
       - cache:/cache
@@ -37,7 +37,7 @@ services:
       traefik.http.services.tube-archivist.loadbalancer.server.port: 8000
 
   archivist-redis:
-    image: redis/redis-stack-server
+    image: redis/redis-stack-server:6.2.6-v17
     restart: always
     volumes:
       - redis:/data
@@ -47,7 +47,7 @@ services:
       - tubearchivist
 
   archivist-es:
-    image: bbilly1/tubearchivist-es # only for amd64, or use official es 8.14.3
+    image: bbilly1/tubearchivist-es:8.14.3
     restart: always
     environment:
       ELASTIC_PASSWORD: ${ELASTIC_SEARCH_PASSWORD}
