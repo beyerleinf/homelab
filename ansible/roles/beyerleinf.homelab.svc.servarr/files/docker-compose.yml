@@ -51,7 +51,7 @@ services:
   radarr:
     container_name: radarr
     restart: always
-    image: binhex/arch-radarr:5.12.2.9335-1-01
+    image: binhex/arch-radarr:5.15.1.9463-1-01
     ports:
       - "7878:7878"
     networks:
