@@ -34,7 +34,7 @@ services:
       - redis:/data
 
   authentik-server:
-    image: ghcr.io/goauthentik/server:2024.8.3
+    image: ghcr.io/goauthentik/server:2024.10.4
     restart: always
     command: server
     environment:
@@ -66,7 +66,7 @@ services:
       traefik.http.services.authentik.loadbalancer.server.port: "9000"
 
   authentik-worker:
-    image: ghcr.io/goauthentik/server:2024.8.3
+    image: ghcr.io/goauthentik/server:2024.10.4
     restart: always
     command: worker
     environment:
