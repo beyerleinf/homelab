@@ -33,7 +33,7 @@ services:
       traefik.http.services.firefly.loadbalancer.server.port: 8080
 
   db:
-    image: mariadb:11.5.2
+    image: mariadb:11.6.2
     restart: always
     networks:
       - firefly
