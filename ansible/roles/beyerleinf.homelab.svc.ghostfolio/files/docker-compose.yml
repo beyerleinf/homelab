@@ -40,7 +40,7 @@ services:
       traefik.http.services.ghostfolio.loadbalancer.server.port: 3333
 
   postgres:
-    image: postgres:15.10-alpine3.20
+    image: postgres:17.2-alpine3.20
     restart: always
     cap_drop:
       - ALL
