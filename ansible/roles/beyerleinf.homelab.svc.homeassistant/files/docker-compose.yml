@@ -3,7 +3,7 @@ services:
   homeassistant:
     container_name: "homeassistant"
     privileged: true
-    image: ghcr.io/home-assistant/home-assistant:2024.11
+    image: ghcr.io/home-assistant/home-assistant:2024.12
     volumes:
       - /run/dbus:/run/dbus:ro
       - /etc/localtime:/etc/localtime:ro
