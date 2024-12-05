@@ -62,7 +62,7 @@ services:
       PAPERLESS_FILENAME_FORMAT: "{created}-{correspondent}-{title}"
 
   gotenberg:
-    image: gotenberg/gotenberg:8.12.0
+    image: gotenberg/gotenberg:8.14.1
     restart: always
     networks:
       - paperless
