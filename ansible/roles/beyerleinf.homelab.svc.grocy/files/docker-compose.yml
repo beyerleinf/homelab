@@ -1,7 +1,7 @@
 name: grocy
 services:
   grocy:
-    image: linuxserver/grocy:4.2.0
+    image: linuxserver/grocy:4.3.0
     restart: always
     container_name: grocy
     environment:
