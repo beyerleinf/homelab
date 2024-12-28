@@ -1,0 +1,70 @@
+name: webhook
+services:
+  site:
+    image: webhooksite/webhook.site
+    command: php artisan queue:work --daemon --tries=3 --timeout=10
+    depends_on:
+      - redis
+    networks:
+      - traefik
+      - webhook
+    environment:
+      APP_ENV: dev
+      APP_DEBUG: true
+      APP_URL: https://webhook.lab.beyerleinf.de
+      APP_LOG: errorlog
+      DB_CONNECTION: sqlite
+      REDIS_HOST: redis
+      BROADCAST_DRIVER: redis
+      CACHE_DRIVER: redis
+      QUEUE_DRIVER: redis
+      ECHO_HOST_MODE: path
+    labels:
+      traefik.enable: true
+      traefik.http.routers.webhook.rule: "Host(`webhook.lab.beyerleinf.de`)"
+      traefik.http.routers.webhook.entrypoints: "websecure"
+      traefik.http.routers.webhook.tls.certresolver: "hetzner"
+      traefik.http.services.webhook.loadbalancer.server.port: 80
+      traefik.http.middlewares.webhook-headers.headers.accesscontrolalloworiginlist: "*"
+      traefik.http.middlewares.webhook-headers.headers.accesscontrolallowmethods: "*"
+      traefik.http.middlewares.webhook-headers.headers.accesscontrolallowheaders: "*"
+      traefik.http.middlewares.webhook-headers.headers.accessControlExposeHeaders: "Content-Length,Content-Range"
+
+  redis:
+    image: redis:7.4.1-alpine3.20
+    volumes:
+      - redis:/data
+    networks:
+      - webhook
+
+  laravel-echo-server:
+    image: webhooksite/laravel-echo-server
+    networks:
+      - traefik
+      - webhook
+    environment:
+      LARAVEL_ECHO_SERVER_AUTH_HOST: "http://webhook"
+      LARAVEL_ECHO_SERVER_HOST: 0.0.0.0
+      LARAVEL_ECHO_SERVER_PORT: 6001
+      ECHO_REDIS_PORT: 6379
+      ECHO_REDIS_HOSTNAME: "redis"
+      ECHO_PROTOCOL: "http"
+      ECHO_ALLOW_CORS: true
+      ECHO_ALLOW_ORIGIN: "*"
+      ECHO_ALLOW_METHODS: "*"
+      ECHO_ALLOW_HEADERS: "*"
+    labels:
+      traefik.enable: true
+      traefik.http.routers.webhook-ws.rule: "Host(`webhook.lab.beyerleinf.de`) && PathPrefix(`/socket.io`)"
+      traefik.http.routers.webhook-ws.entrypoints: "websecure"
+      traefik.http.routers.webhook-ws.tls.certresolver: "hetzner"
+      traefik.http.services.webhook-ws.loadbalancer.server.port: 6001
+
+volumes:
+  redis:
+
+networks:
+  webhook:
+    name: webhook
+  traefik:
+    external: true

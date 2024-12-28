@@ -1,0 +1,4 @@
+---
+# defaults file for beyerleinf.homelab.svc.webhook
+
+tmp_dir: /tmp/webhook

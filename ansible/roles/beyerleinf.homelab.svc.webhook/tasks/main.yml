@@ -1,0 +1,44 @@
+---
+# tasks file for beyerleinf.homelab.svc.webhook
+
+- name: Create temp directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "777"
+    recurse: true
+
+- name: Copy Docker Compose file
+  ansible.builtin.copy:
+    src: files/docker-compose.yml
+    dest: "{{ tmp_dir }}/docker-compose.yml"
+    mode: "666"
+
+- name: Stop Webhook.site
+  community.docker.docker_compose_v2:
+    project_src: "{{ tmp_dir }}"
+    files:
+      - docker-compose.yml
+    state: stopped
+    remove_orphans: true
+
+- name: Deploy Webhook.site
+  community.docker.docker_compose_v2:
+    project_src: "{{ tmp_dir }}"
+    files:
+      - docker-compose.yml
+  register: output
+
+- name: Verify that Webhook.site is running
+  ansible.builtin.assert:
+    that:
+      - "output.containers[0].State == 'running'"
+      - "output.containers[1].State == 'running'"
+      - "output.containers[2].State == 'running'"
+
+- name: Remove temp directory
+  ansible.builtin.file:
+    path: "{{ tmp_dir }}"
+    state: absent
