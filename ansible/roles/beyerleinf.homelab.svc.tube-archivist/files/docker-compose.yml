@@ -8,8 +8,8 @@ services:
       - ${MEDIA_DIR}:/youtube
       - cache:/cache
     environment:
-      ES_URL: "http://archivist-es:9200"
-      REDIS_HOST: "archivist-redis"
+      ES_URL: "http://es:9200"
+      REDIS_HOST: "redis"
       HOST_UID: 1000
       HOST_GID: 1000
       TA_HOST: "ta.lab.beyerleinf.de"
@@ -27,8 +27,8 @@ services:
       - tubearchivist
       - traefik
     depends_on:
-      - archivist-es
-      - archivist-redis
+      - es
+      - redis
     labels:
       traefik.enable: true
       traefik.http.routers.tube-archivist.rule: "Host(`ta.lab.beyerleinf.de`)"
@@ -36,17 +36,17 @@ services:
       traefik.http.routers.tube-archivist.tls.certresolver: "hetzner"
       traefik.http.services.tube-archivist.loadbalancer.server.port: 8000
 
-  archivist-redis:
+  redis:
     image: redis/redis-stack-server:6.2.6-v17
     restart: always
     volumes:
       - redis:/data
     depends_on:
-      - archivist-es
+      - es
     networks:
       - tubearchivist
 
-  archivist-es:
+  es:
     image: bbilly1/tubearchivist-es:8.16.0
     restart: always
     environment:
