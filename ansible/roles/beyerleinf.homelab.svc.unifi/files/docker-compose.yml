@@ -45,7 +45,7 @@ services:
       traefik.http.middlewares.unifi.headers.customrequestheaders.Authorization: ""
 
   mongodb:
-    image: mongo:7.0.15
+    image: mongo:7.0.16
     restart: always
     networks:
       - unifi
