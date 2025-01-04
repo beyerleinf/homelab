@@ -1,0 +1,24 @@
+name: filebrowser
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:v2.31.2
+    container_name: filebrowser
+    networks:
+      - traefik
+      - filebrowser
+    volumes:
+      - ${ROOT_DIR}:/srv
+      - ${DB_PATH}:/database.db
+      - ${CONFIG_PATH}:/.filebrowser.json
+    labels:
+      traefik.enable: true
+      traefik.http.routers.filebrowser.rule: "Host(`f.lab.beyerleinf.de`)"
+      traefik.http.routers.filebrowser.entrypoints: "websecure"
+      traefik.http.routers.filebrowser.tls.certresolver: "hetzner"
+      traefik.http.services.filebrowser.loadbalancer.server.port: 8080
+
+networks:
+  traefik:
+    external: true
+  filebrowser:
+    name: filebrowser

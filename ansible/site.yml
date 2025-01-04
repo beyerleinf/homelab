@@ -26,6 +26,7 @@
     - { role: beyerleinf.homelab.svc.grocy, tags: ["grocy"] }
     - { role: beyerleinf.homelab.svc.homeassistant, tags: ["hass"] }
     - { role: beyerleinf.homelab.svc.webhook, tags: ["webhook"] }
+    - { role: beyerleinf.homelab.svc.filebrowser, tags: ["filebrowser"] }
 
 - name: After All tasks
   hosts: arya

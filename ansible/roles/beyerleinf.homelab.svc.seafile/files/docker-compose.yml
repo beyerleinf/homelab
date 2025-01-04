@@ -22,8 +22,12 @@ services:
   seafile:
     image: seafileltd/seafile-mc:12.0-latest
     container_name: seafile
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
     volumes:
       - ${SEAFILE_STORAGE_PATH}:/shared
+      - /mnt/user/docker/seafile-fuse:/seafile-fuse
     environment:
       DB_HOST: db
       DB_ROOT_PASSWD: ${DB_ROOT_PASSWORD}

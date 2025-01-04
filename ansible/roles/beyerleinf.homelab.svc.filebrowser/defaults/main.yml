@@ -1,0 +1,8 @@
+---
+# defaults file for beyerleinf.homelab.svc.filebrowser
+
+tmp_dir: "/tmp/filebrowser"
+docker_dir: "{{ docker_base_path }}/filebrowser"
+root_dir: "/mnt/user/filebrowser"
+db_path: "{{ docker_dir }}/filebrowser.db"
+config_path: "{{ docker_dir }}/config.json"
