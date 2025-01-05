@@ -18,7 +18,7 @@ services:
   prowlarr:
     container_name: prowlarr
     restart: always
-    image: binhex/arch-prowlarr:1.28.2.4885-1-01
+    image: binhex/arch-prowlarr:1.29.2.4915-1-01
     ports:
       - "9696:9696"
     networks:
