@@ -68,7 +68,7 @@ services:
   lidarr:
     container_name: lidarr
     restart: always
-    image: binhex/arch-lidarr:2.5.3.4341-1-02
+    image: binhex/arch-lidarr:2.8.2.4493-1-02
     ports:
       - "8686:8686"
     networks:
