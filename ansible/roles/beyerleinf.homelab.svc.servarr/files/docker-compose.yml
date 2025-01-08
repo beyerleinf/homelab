@@ -33,7 +33,7 @@ services:
   sonarr:
     container_name: sonarr
     restart: always
-    image: binhex/arch-sonarr:4.0.11.2680-1-01
+    image: binhex/arch-sonarr:4.0.12.2823-1-01
     ports:
       - "8989:8989"
       - "9897:9897"
