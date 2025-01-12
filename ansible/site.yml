@@ -2,6 +2,7 @@
 - name: Deploy
   hosts: arya
   become: true
+  gather_facts: false
   roles:
     - { role: beyerleinf.homelab.common, tags: ["always"] }
     - { role: beyerleinf.homelab.svc.hetzner-ddns, tags: ["infra"] }
@@ -32,6 +33,7 @@
 - name: After All tasks
   hosts: arya
   tags: always
+  gather_facts: false
   become: true
   tasks:
     - name: Prune dangling images
