@@ -1,0 +1,30 @@
+services:
+  mc:
+    image: itzg/minecraft-server
+    tty: true
+    stdin_open: true
+    ports:
+      - "25565:25565"
+    environment:
+      EULA: "TRUE"
+      TZ: "Europe/Berlin"
+      INIT_MEMORY: "3G"
+      MAX_MEMORY: "5G"
+      TYPE: "FABRIC"
+      FABRIC_LOADER_VERSION: "0.16.9"
+      FABRIC_LAUNCHER_VERSION: "1.0.1"
+      VERSION: "1.20.4"
+      MOTD: "Welcome!"
+      DIFFICULTY: "easy"
+      MAX_PLAYERS: 5
+      SNOOPER_ENABLED: "FALSE"
+      LEVEL: "world"
+      ALLOW_FLIGHT: "TRUE"
+      SERVER_NAME: "Minecraft Server"
+      ENABLE_WHITELIST: "TRUE"
+      WHITELIST_FILE: "whitelist.json"
+      ENABLE_AUTOPAUSE: "TRUE"
+      AUTOPAUSE_TIMEOUT_EST: "600"
+      MODRINTH_PROJECTS: ${MODRINTH_MODS}
+    volumes:
+      - ${DATA_DIR}:/data

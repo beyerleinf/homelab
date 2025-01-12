@@ -1,0 +1,62 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for beyerleinf.homelab.svc.minecraft-server
+
+tmp_dir: "/tmp/minecraft-server"
+docker_dir: "/mnt/user/docker/minecraft2"
+modrinth_mods:
+  - 3dskinlayers
+  - appleskin
+  - architectury-api
+  - bookshelf-lib
+  - cc-tweaked:alpha
+  - chunk-loaders
+  - cloth-config
+  - collective
+  - c2me-fabric:alpha
+  - dynmap:beta
+  - emi
+  - energized-power
+  - extended-drawers
+  - fabric-api
+  - fabric-language-kotlin
+  - fallingleaves
+  - fallingtree
+  - ferrite-core
+  - forge-config-api-port
+  - iceberg
+  - indium
+  - inventory-sorting
+  - jei:beta
+  - lambdynamiclights
+  - lithium
+  - luckperms
+  - macaws-bridges
+  - macaws-doors
+  - macaws-fences-and-walls
+  - macaws-furniture
+  - macaws-holidays
+  - macaws-lights-and-lamps
+  - macaws-paintings
+  - macaws-paths-and-pavings
+  - macaws-roofs
+  - macaws-trapdoors
+  - macaws-windows
+  - open-simple-frames:alpha
+  - paladins-furniture
+  - prism-lib
+  - puzzles-lib
+  - searchables
+  - bl4cks-sit
+  - sodium
+  - sodium-extra
+  - starlight
+  - supermartijn642s-config-lib
+  - supermartijn642s-core-lib
+  - tesseract
+  - placeholder-api
+  - tiny-item-animations
+  - vein-mining
+  - visuality
+  - worldedit
+  - yacl
