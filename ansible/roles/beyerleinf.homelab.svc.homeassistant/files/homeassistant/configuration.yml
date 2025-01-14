@@ -14,9 +14,3 @@ http:
   trusted_proxies:
     - 10.0.0.0/24 # local subnet
     - 172.19.0.0/24 # traefik subnet
-
-waste_collection_schedule: !include waste_schedule.yaml
-
-sensor:
-  - platform: waste_collection_schedule
-    name: "Waste Schedule"
