@@ -79,7 +79,7 @@ services:
     restart: always
 
   db-backup:
-    image: tiredofit/db-backup:4.1.12
+    image: tiredofit/db-backup:4.1.14
     environment:
       TIMEZONE: "Europe/Berlin"
       MODE: "MANUAL"
