@@ -52,7 +52,7 @@ services:
       traefik.http.services.seafile.loadbalancer.server.port: 80
 
   db-backup:
-    image: tiredofit/db-backup:4.1.14
+    image: tiredofit/db-backup:4.1.15
     environment:
       TIMEZONE: "Europe/Berlin"
       MODE: "MANUAL"
