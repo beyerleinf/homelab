@@ -3,7 +3,7 @@ services:
   tubearchivist:
     container_name: tubearchivist
     restart: always
-    image: bbilly1/tubearchivist:v0.4.13
+    image: bbilly1/tubearchivist:v0.5.0
     volumes:
       - ${MEDIA_DIR}:/youtube
       - cache:/cache
