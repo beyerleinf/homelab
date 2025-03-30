@@ -3,16 +3,16 @@ services:
   tubearchivist:
     container_name: tubearchivist
     restart: always
-    image: bbilly1/tubearchivist:v0.5.0
+    image: bbilly1/tubearchivist:v0.5.1
     volumes:
       - ${MEDIA_DIR}:/youtube
       - cache:/cache
     environment:
       ES_URL: "http://es:9200"
-      REDIS_HOST: "redis"
+      REDIS_CON: "redis://redis:6379"
       HOST_UID: 1000
       HOST_GID: 1000
-      TA_HOST: "ta.lab.beyerleinf.de"
+      TA_HOST: "https://ta.lab.beyerleinf.de"
       TA_USERNAME: ${TA_ROOT_USER}
       TA_PASSWORD: ${TA_ROOT_PASSWORD}
       ELASTIC_PASSWORD: ${ELASTIC_SEARCH_PASSWORD}
