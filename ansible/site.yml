@@ -26,6 +26,7 @@
     - { role: beyerleinf.homelab.svc.webhook, tags: ["webhook"] }
     - { role: beyerleinf.homelab.svc.filebrowser, tags: ["filebrowser"] }
     - { role: beyerleinf.homelab.svc.minecraft-server, tags: ["mcs"] }
+    - { role: beyerleinf.homelab.svc.viseron, tags: ["viseron"] }
 
 - name: After All tasks
   hosts: arya
