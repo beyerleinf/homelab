@@ -55,12 +55,6 @@
     recurse: true
   when: not mqtt_config_dir_check.stat.exists
 
-- name: Copy Home Assistant waste_schedule.yml file
-  ansible.builtin.template:
-    src: files/homeassistant/waste_schedule.yml
-    dest: "{{ hass_docker_dir }}/waste_schedule.yaml"
-    mode: "666"
-
 - name: Copy Home Assistant configuration.yml file
   ansible.builtin.template:
     src: files/homeassistant/configuration.yml
