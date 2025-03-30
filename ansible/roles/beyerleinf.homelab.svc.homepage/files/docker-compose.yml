@@ -16,6 +16,8 @@ services:
       traefik.http.services.homepage.loadbalancer.server.port: 3000
     depends_on:
       - dockerproxy
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: "home.lab.beyerleinf.de"
     restart: always
 
   dockerproxy:

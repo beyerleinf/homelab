@@ -94,30 +94,6 @@
               label: "Weather"
               value: "{% raw %}{attributes.temperature} {attributes.temperature_unit} | {attributes.wind_speed} {attributes.wind_speed_unit}{% endraw %}"
 
-- "Personal Management":
-    - "Firefly III":
-        icon: "sh-firefly-iii"
-        href: https://firefly.lab.beyerleinf.de
-        siteMonitor: https://firefly.lab.beyerleinf.de
-        server: arya
-        container: firefly
-    - Ghostfolio:
-        icon: "sh-ghostfolio"
-        href: https://ghostfolio.lab.beyerleinf.de
-        siteMonitor: https://ghostfolio.lab.beyerleinf.de
-        server: arya
-        container: ghostfolio
-        widget:
-          type: ghostfolio
-          url: https://ghostfolio.lab.beyerleinf.de
-          key: {{ ghostfolio_token }}
-    - Grocy:
-        icon: "sh-grocy"
-        href: https://grocy.lab.beyerleinf.de
-        siteMonitor: https://grocy.lab.beyerleinf.de
-        server: arya
-        container: grocy
-
 - Network:
     - UniFi:
         icon: "sh-ubiquiti-unifi"
