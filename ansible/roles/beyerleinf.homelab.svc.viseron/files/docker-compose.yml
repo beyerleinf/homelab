@@ -1,20 +1,28 @@
 name: viseron
 services:
   viseron:
-    image: roflcoopter/viseron:3.0.0
+    image: roflcoopter/amd64-cuda-viseron:3.0.0
     container_name: viseron
     shm_size: "1024mb"
+    runtime: nvidia
+    environment:
+      PUID: 1000
+      GUID: 1000
     volumes:
       - ${DATA_DIR}/segments:/segments
       - ${DATA_DIR}/snapshots:/snapshots
       - ${DATA_DIR}/thumbnails:/thumbnails
       - ${DATA_DIR}/event_clips:/event_clips
-      - ${CONFIG_DIR}:/config
+      - viseron:/config
       - /etc/localtime:/etc/localtime:ro
     ports:
       - 8888:8888
     networks:
       - viseron
+
+volumes:
+  viseron:
+    name: viseron
 
 networks:
   viseron:

@@ -1,19 +1,9 @@
-#SPDX-License-Identifier: MIT-0
 ---
 # tasks file for beyerleinf.homelab.svc.viseron
 
 - name: Create temp directory
   ansible.builtin.file:
     path: "{{ tmp_dir }}"
-    state: directory
-    owner: root
-    group: root
-    mode: "777"
-    recurse: true
-
-- name: Ensure docker directory exists
-  ansible.builtin.file:
-    path: "{{ docker_dir }}"
     state: directory
     owner: root
     group: root
@@ -32,7 +22,7 @@
     - "{{ data_dir }}/segments"
     - "{{ data_dir }}/snapshots"
     - "{{ data_dir }}/thumbnails"
-    - "{{ data_dir }}/event-clips"
+    - "{{ data_dir }}/event_clips"
 
 - name: Copy Docker env file
   ansible.builtin.template:
