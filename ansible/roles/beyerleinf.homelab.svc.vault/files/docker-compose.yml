@@ -1,7 +1,7 @@
 name: vault
 services:
   vault:
-    image: hashicorp/vault:1.18.4
+    image: hashicorp/vault:1.19.1
     container_name: vault
     restart: always
     environment:
