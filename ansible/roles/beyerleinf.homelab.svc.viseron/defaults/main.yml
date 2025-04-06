@@ -1,7 +1,0 @@
-#SPDX-License-Identifier: MIT-0
----
-# defaults file for beyerleinf.homelab.svc.viseron
-
-tmp_dir: "/tmp/viseron"
-docker_dir: "{{ docker_base_path }}/viseron"
-data_dir: "/mnt/user/viseron"

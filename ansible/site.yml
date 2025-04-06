@@ -26,7 +26,6 @@
     - { role: beyerleinf.homelab.svc.webhook, tags: ["webhook"] }
     - { role: beyerleinf.homelab.svc.filebrowser, tags: ["filebrowser"] }
     - { role: beyerleinf.homelab.svc.minecraft-server, tags: ["mcs"] }
-    - { role: beyerleinf.homelab.svc.viseron, tags: ["viseron"] }
     - { role: beyerleinf.homelab.svc.frigate, tags: ["frigate"] }
 
 - name: After All tasks
