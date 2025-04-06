@@ -1,0 +1,5 @@
+---
+# defaults file for beyerleinf.homelab.svc.frigate
+tmp_dir: "/tmp/frigate"
+docker_dir: "{{ docker_base_path }}/frigate"
+data_dir: "/mnt/user/frigate"
